@@ -10,8 +10,8 @@ class Config(object):
 	"""
 	Database Connection
 	"""
-	SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@localhost/db_abk'
-	#SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://user_db:Q1w2e3r4!!@192.168.20.1/pkpo'
+	# SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@localhost/db_abk'
+	SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://user123:Q1w2e3r4!!@localhost/db_abk'
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	
 	BOOTSTRAP_FONTAWESOME = True
