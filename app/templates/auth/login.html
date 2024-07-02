@@ -1,0 +1,150 @@
+{% import "bootstrap/utils.html" as utils %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{{ title }} - ABK | PN Muara Bulian</title>
+  <link rel="icon" href="{{ url_for('serveStaticResource', resource='img/favico.png') }}" type="image/x-icon">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ url_for('serveStaticResource', resource='plugins/fontawesome-free/css/all.min.css') }}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="{{ url_for('serveStaticResource', resource='plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{{ url_for('serveStaticResource', resource='plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{ url_for('serveStaticResource', resource='plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('serveStaticResource', resource='plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{{ url_for('serveStaticResource', resource='plugins/jqvmap/jqvmap.min.css') }}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ url_for('serveStaticResource', resource='dist/css/adminlte.min.css') }}">
+  <!-- Custom style -->
+  <link rel="stylesheet" href="{{ url_for('serveStaticResource', resource='dist/css/login.css') }}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{{ url_for('serveStaticResource', resource='plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{{ url_for('serveStaticResource', resource='plugins/daterangepicker/daterangepicker.css') }}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{{ url_for('serveStaticResource', resource='plugins/summernote/summernote-bs4.css') }}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <style>
+    .footer {
+      position: relative;
+    }
+
+    .login-page {
+      height: 95vh;
+      background-image: url("{{ url_for('serveStaticResource', resource='img/bg.jpg')}}");
+      background-size: cover;
+    }
+
+    .login-logo,
+    .register-logo {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-bottom: .9rem;
+      text-align: center;
+    }
+
+    .card {
+      background-color: bisque;
+      opacity: 0.6;
+    }
+
+    .btn {
+      width: 100%;
+    }
+
+    .btn:hover {
+      border-color: #007bff;
+      background-color: #fff;
+      color: #007bff
+    }
+  </style>
+</head>
+
+<body class="hold-transition">
+  <div class="login-page">
+    {{ utils.flashed_messages(dismissible=True) }}
+    <div class="login-box">
+      <div class="login-logo">
+       <a href="/beranda">
+        <img width=100px src="{{ url_for('serveStaticResource', resource='img/logo.png') }}"
+        alt="Logo Perdata PN Kab. Kediri" class="brand-image">
+       </a>
+      </div>
+      <div class="card">
+        <div class="card-body login-card-body">
+          <p class="login-box-msg">
+            <!-- <img src="{{ url_for('serveStaticResource', resource='img/logo.png') }}" alt="Logo Perdata PN Kab. Kediri" class="brand-image"> -->
+          </p>
+
+          <form action="" method="post" role="post">
+            {{ form.csrf_token() }}
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id="name" name="name" placeholder="Nama Pengguna" required>
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" id="password" name="password" placeholder="Kata Sandi"
+                required>
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row text-right">
+              <div class="col-8">
+                <!-- <div class="icheck-primary">
+                <input type="checkbox" id="remember">
+                <label for="remember">
+                  Ingat Saya
+                </label>
+              </div> -->
+              </div>
+
+              <div class="col-4 tex">
+                <button id="submit" name="submit" type="submit" class="btn btn-primary btn-block">Masuk</button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <footer class="footer container-fluid pt-2">
+    <strong>Copyright &copy; 2024 <a href="https://instagram.com/pn.muarabulian">PN Muara Bulian/a>.</strong>
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 1.0.0
+    </div>
+  </footer>
+
+
+  <!-- jQuery -->
+  <script src="{{ url_for('serveStaticResource', resource='plugins/jquery/jquery.min.js') }}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{{ url_for('serveStaticResource', resource='plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{{ url_for('serveStaticResource', resource='plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{ url_for('serveStaticResource', resource='dist/js/adminlte.min.js') }}"></script>
+  <!-- Custom Scripts -->
+  <script src="{{ url_for('serveStaticResource', resource='dist/js/universal.js') }}"></script>
+
+</body>
+
+</html>

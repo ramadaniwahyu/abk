@@ -1,0 +1,169 @@
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.pdfobject-container {
+    height: 30rem;
+    border: 1rem solid rgba(0, 0, 0, .1);
+}
+
+.btn-app {
+    border-radius: 3px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    color: #6c757d;
+    font-size: 12px;
+    height: 50px;
+    margin: 0;
+    min-width: 60px;
+    padding: 15px 5px;
+    position: relative;
+    text-align: center;
+}
+
+.user-p img {
+    height: auto;
+    width: 6 rem !important;
+    margin: auto;
+}
+
+.container {
+    max-width: 960px;
+}
+
+/*
+   * Custom translucent site header
+   */
+
+.site-header {
+    background-color: rgb(130, 148, 196);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+}
+
+.site-header a {
+    color: #474747;
+    transition: ease-in-out color .15s;
+}
+
+.site-header a:hover {
+    color: #DBDFEA;
+    text-decoration: none;
+}
+
+/*
+   * Dummy devices (replace them with your own or something else entirely!)
+   */
+
+.product-device {
+    position: absolute;
+    right: 10%;
+    bottom: -30%;
+    width: 300px;
+    height: 560px;
+    background-color: rgb(130, 148, 196);
+    border-radius: 21px;
+    -webkit-transform: rotate(30deg);
+    transform: rotate(30deg);
+}
+
+.product-device::before {
+    position: absolute;
+    top: 10%;
+    right: 10px;
+    bottom: 10%;
+    left: 10px;
+    content: "";
+    background-color: #ACB1D6;
+    border-radius: 5px;
+}
+
+.product-device-2 {
+    top: -25%;
+    right: auto;
+    bottom: 0;
+    left: 5%;
+    background-color: #DBDFEA
+}
+
+.flex-equal>* {
+    -ms-flex: 1;
+    flex: 1;
+}
+
+@media (min-width: 768px) {
+    .flex-md-equal>* {
+        -ms-flex: 1;
+        flex: 1;
+    }
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+#map {
+    height: 600px;
+    width: 100vh;
+}
+
+/* .contact .form-control {
+    width: 800px;
+} */
+
+.display-4 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.cover {
+    height: auto;
+    /* width: max-content; */
+    /* margin-top: 200px;
+    margin-bottom: 200px; */
+}
+
+.cover-container {
+    /* width: auto; */
+    max-width: 42em;
+    padding: 0 1.5rem;
+    display: block;
+    height: fit-content;
+  }
+
+.cover .btn-lg {
+    padding: .75rem 1.25rem;
+    font-weight: 700;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+.divider-title {
+    border-bottom: 5px solid #6c757d;
+}
+
+.public {
+    /* background-color: #ddd; */
+    max-width: 100%;
+}
+
+.postc p img {
+    max-width: -webkit-fill-available;
+}
