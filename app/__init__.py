@@ -40,6 +40,9 @@ def serveStaticResource(resource):
 from app.components.auth import auth as auth_blueprint
 app.register_blueprint(auth_blueprint)
 
+from app.components.jabatan import jabatan as jabatan_blueprint
+app.register_blueprint(jabatan_blueprint)
+
 # Errors Handling
 @app.errorhandler(403)
 def forbidden(error):
