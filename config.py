@@ -1,3 +1,9 @@
+import os
+from dotenv import load_dotenv
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv()
+
 class Config(object):
 	"""
 	Configuration base, for all environments.
@@ -10,13 +16,15 @@ class Config(object):
 	"""
 	Database Connection
 	"""
-	SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@localhost/db_abk'
+	SQLALCHEMY_DATABASE_URI = os.environ.get('URL_DATABASE')
 	# SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://user123:Q1w2e3r4!!@localhost/db_abk'
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	
 	BOOTSTRAP_FONTAWESOME = True
-	SECRET_KEY = "AFSBAKFBAKBFAK09876543TNJQN!$@y(!$yGABV"
+	SECRET_KEY = os.environ.get('SECRET_KEY')
 	CSRF_ENABLED = True
+
+	UPLOADED_PATH = os.path.join(basedir, 'assets/uploads')
 
 class ProductionConfig(Config):
 	DEBUG = False
