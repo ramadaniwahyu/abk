@@ -1,0 +1,129 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+
+{% block styles %}
+{% endblock styles %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="/beranda"><i class="fas fa-tachometer-alt"></i> Beranda</a></li>
+    <li class="breadcrumb-item"><a href="/data-jabatan"><i class="fas fa-graduation-cap"></i> Jabatan</a></li>
+    <li class="breadcrumb-item active"> {{ title }}</li>
+</ol>
+{% endblock breadcrumbs %}
+
+{% block contents %}
+<div class="card">
+    <div class="card-header text-right">
+        <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.list') }}">
+            <span class="fas fa-arrow-left"></span>&nbsp;Kembali
+        </a>
+        <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
+            <span class="fas fa-plus"></span>&nbsp;Edit Jabatan
+        </a>
+    </div>
+    <div class="card-body">
+        <div>
+            <table class="table no-border">
+                <tbody>
+                    <tr>
+                        <td width=5%>Nama Jabatan</td>
+                        <td width=2%>:</td>
+                        <td><strong>{{ item.name }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td width=5%>Keterangan / Deskripsi</td>
+                        <td width=2%>:</td>
+                        <td width=20%>
+                            {% if item.desc %}
+                            {{ item.desc }}
+                            {% else %}
+                            <i>Belum ada deskripsi</i>
+                            {% endif%}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <div class="text-right">
+            <a type="button" class="btn bg-primary waves-effect m-r-20" style="width: 100px;" data-toggle="modal" data-target="#defaultModal">
+                <span class="fas fa-plus"></span>&nbsp;Tambah
+            </a> <br /><br />
+        </div>
+        <div class="table-responsive">
+            <table id="myDataT" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th width=5%>No</th>
+                        <th>Uraian Tugas</th>
+                        <th>Satuan</th>
+                        <th>Volume Kerja</th>
+                        <th>Waktu (Menit)</th>
+                        <th>Beban Kerja</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for no, data in list %}
+                    <tr>
+                        <td class="text-center">
+                            {{ no }} 
+                        </td>
+                        <td>
+                            <a href="{{ url_for('jabatan.edit_uraian', id=data.id) }}">{{ data.uraian_tugas }}</a>
+                        </td>
+                        <td class="text-center">
+                            {{ data.satuan }}
+                        </td>
+                        <td class="text-center">
+                            {{ data.volume }}
+                        </td>
+                        <td class="text-center">
+                            {{ data.waktu }}
+                        </td>
+                        <td class="text-center">
+                            {{ data.volume * data.waktu }}
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-toggle" toggle="buttons">
+                                <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit_uraian', id=data.id) }}">
+                                    <i data-toggle="tooltip" data-placement="top" title="Edit" class="fas fa-edit"></i>
+                                </a>
+                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.delete_uraian', id=data.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
+                                    <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="text-center">
+                        <td colspan="5"><strong>Total Beban Kerja</strong></td>
+                        <td><strong>{{total}}</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock contents %}
+
+{% block modals %}
+<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{item.name}} - Uraian Tugas Baru</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                {{ wtf.quick_form(form, button_map={'submit': 'primary'}) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock modals %}
+
+{% block scripts %}
+{% endblock scripts %}

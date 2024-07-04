@@ -19,20 +19,26 @@ def list():
         flash('Data Jabatan berhasil ditambahkan', category='success')
         return redirect(url_for('jabatan.list'))
     
-    return render_template('jabatan/list.html', list=list, title='Data Jabatan')
+    return render_template('jabatan/list.html', list=list, form=form, title='Data Jabatan')
 
 @jabatan.route('/data-jabatan/<id>', methods=['GET', 'POST'])
 @login_required
 def view(id):
     item = Jabatan.query.get_or_404(id)
-    list = enumerate(Ikhtisar_Jabatan.query.filter_by(Ikhtisar_Jabatan.jabatan_id==item.id).all(), start=1)
+    uraian = Ikhtisar_Jabatan.query.filter(Ikhtisar_Jabatan.jabatan_id==item.id).all()
+    total = 0
+    for i in uraian:
+        beban = i.volume * i.waktu
+        total = total + beban
     form = IkhtisarJabatanForm()
+    list = enumerate(uraian, start=1)
     if form.validate_on_submit():
         new = Ikhtisar_Jabatan(
+            jabatan_id = item.id,
             uraian_tugas = form.uraian_tugas.data,
             satuan = form.satuan.data,
             volume = form.volume.data,
-            time = form.time.data,
+            waktu = form.waktu.data,
             peralatan = form.peralatan.data,
             desc = form.desc.data
         )
@@ -41,7 +47,7 @@ def view(id):
         flash('Uraian tugas baru telah ditambahkan')
         return redirect(url_for('jabatan.view', id=item.id))
     
-    return render_template('jabatan/view.html', item=item, list=list, form=form, title='View Data Jabatan')
+    return render_template('jabatan/view.html', item=item, list=list, total=total, form=form, title='View Data Jabatan')
 
 @jabatan.route('/data-jabatan/<id>/edit', methods=['GET', 'POST'])
 @login_required
@@ -68,3 +74,13 @@ def delete(id):
     db.session.delete(item)
     db.session.commit()
     return redirect(url_for('jabatan.list'))
+
+@jabatan.route('/data-jabatan/uraian/<id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_uraian(id):
+    pass
+
+@jabatan.route('/data-jabatan/uraian/<id>/hapus', methods=['GET', 'POST'])
+@login_required
+def delete_uraian(id):
+    pass
