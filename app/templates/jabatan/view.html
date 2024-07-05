@@ -61,6 +61,7 @@
                         <th>Volume Kerja</th>
                         <th>Waktu (Menit)</th>
                         <th>Beban Kerja</th>
+                        <th>Peralatan / Keterangan</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -84,6 +85,12 @@
                         </td>
                         <td class="text-center">
                             {{ data.volume * data.waktu }}
+                        </td>
+                        <td>
+                            <strong>Peralatan :</strong><br />
+                            {{ data.peralatan }} <br /><br />
+                            <strong>Keterangan :</strong><br />
+                            {{ data.desc }}
                         </td>
                         <td class="text-center">
                             <div class="btn-group btn-group-toggle" toggle="buttons">
