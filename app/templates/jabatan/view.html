@@ -71,7 +71,7 @@
                             {{ no }} 
                         </td>
                         <td>
-                            <a href="{{ url_for('jabatan.edit_uraian', id=data.id) }}">{{ data.uraian_tugas }}</a>
+                            {{ data.uraian_tugas }}
                         </td>
                         <td class="text-center">
                             {{ data.satuan }}
@@ -93,10 +93,10 @@
                                 <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.delete_uraian', id=data.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
                                     <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
                                 </a> -->
-                                <a type="button" class="btn bg-info waves-effect m-r-20" href="#">
+                                <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit_uraian', id=data.id) }}">
                                     <i data-toggle="tooltip" data-placement="top" title="Edit" class="fas fa-edit"></i>
                                 </a>
-                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="#" onclick="return confirm('Yakin menghapus data ini?');">
+                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.delete_uraian', id=data.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
                                     <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
                                 </a>
                             </div>
