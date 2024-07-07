@@ -1,0 +1,77 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+
+{% block styles %}
+{% endblock styles %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="/beranda"><i class="fas fa-tachometer-alt"></i> Beranda</a></li>
+    <li class="breadcrumb-item active"> {{ title }}</li>
+</ol>
+{% endblock breadcrumbs %}
+
+{% block contents %}
+<div class="card">
+    <div class="card-header text-right">
+        <a type="button" class="btn bg-teal waves-effect m-r-20" style="width: 100px;" data-toggle="modal" data-target="#defaultModal">
+            <span class="fas fa-plus"></span>&nbsp;Tambah
+        </a>        
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="myData" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th width=5%>No</th>
+                        <th>Nama Pegawai</th>
+                        <th>NIP</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for no, item in list %}
+                    <tr>
+                        <td class="text-center">
+                            {{ no }} 
+                        </td>
+                        <td>
+                            <a href="{{ url_for('pegawai.view', id=item.id) }}">{{ item.name }}</a>
+                        </td>
+                        <td>
+                            {{ item.nomor }}
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-toggle" toggle="buttons">
+                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('pegawai.delete', id=item.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
+                                    <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock contents %}
+
+{% block modals %}
+<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tambah Data Baru</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                {{ wtf.quick_form(form, button_map={'submit': 'primary'}) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock modals %}
+
+{% block scripts %}
+{% endblock scripts %}

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, SelectField, IntegerField, FloatField
-from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms.validators import DataRequired
 
 class JabatanForm(FlaskForm):
     name = StringField('Nama Jabatan', validators=[DataRequired()])
