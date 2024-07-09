@@ -43,6 +43,9 @@ app.register_blueprint(auth_blueprint)
 from app.components.jabatan import jabatan as jabatan_blueprint
 app.register_blueprint(jabatan_blueprint)
 
+from app.components.pegawai import pegawai as pegawai_blueprint
+app.register_blueprint(pegawai_blueprint)
+
 # Errors Handling
 @app.errorhandler(403)
 def forbidden(error):

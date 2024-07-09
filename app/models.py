@@ -1,6 +1,6 @@
-from datetime import datetime, date, time
+from datetime import datetime
 
-from flask_login import UserMixin, current_user
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.ext.declarative import declared_attr
 

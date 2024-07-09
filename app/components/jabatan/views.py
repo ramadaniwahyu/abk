@@ -68,19 +68,39 @@ def edit(id):
 @login_required
 def delete(id):
     item = Jabatan.query.get_or_404(id)
-    ikhtisar = Ikhtisar_Jabatan.query.filter_by(Ikhtisar_Jabatan.jabatan_id==item.id).all()
-    for i in ikhtisar:
-        db.session.delete(i)
+    list = Ikhtisar_Jabatan.query.filter(Ikhtisar_Jabatan.jabatan_id==item.id).all()
+    if list:
+        for i in list:
+            db.session.delete(i)
     db.session.delete(item)
     db.session.commit()
+    flash('Data Jabatan "'+item.name+'" telah dihapus.')
     return redirect(url_for('jabatan.list'))
 
 @jabatan.route('/data-jabatan/uraian/<id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_uraian(id):
-    pass
+    item = Ikhtisar_Jabatan.query.get_or_404(id)
+    form = IkhtisarJabatanForm(obj=item)
+    if form.validate_on_submit():
+        item.uraian_tugas = form.uraian_tugas.data
+        item.satuan = form.satuan.data
+        item.volume = form.volume.data
+        item.waktu = form.waktu.data
+        item.peralatan = form.peralatan.data
+        item.desc = form.desc.data
+
+        db.session.commit()
+        flash('Uraian tugas telah diubah.', category='success')
+        return redirect(url_for('jabatan.view', id=item.jabatan_id))
+    
+    return render_template('jabatan/edit-uraian.html', form=form, item=item, title='Edit Ikhtisar Jabatan')
 
 @jabatan.route('/data-jabatan/uraian/<id>/hapus', methods=['GET', 'POST'])
 @login_required
 def delete_uraian(id):
-    pass
+    item = Ikhtisar_Jabatan.query.get_or_404(id)
+    db.session.delete(item)
+    db.session.commit()
+    flash('Data Uraian Tugas telah dihapus', category='danger')
+    return redirect(url_for('jabatan.view', id=item.jabatan_id))
