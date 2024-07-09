@@ -1,0 +1,67 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+
+{% block styles %}
+{% endblock styles %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="/beranda"><i class="fas fa-tachometer-alt"></i> Beranda</a></li>
+    <li class="breadcrumb-item active"> {{ title }}</li>
+</ol>
+{% endblock breadcrumbs %}
+
+{% block contents %}
+<div class="card">
+    <div class="card-header text-right">
+        <a type="button" class="btn bg-success waves-effect m-r-20" target="_blank" href="{{ url_for('jabatan.list') }}">
+            <span class="fas fa-graduation-cap"></span>&nbsp;Daftar Jabatan
+        </a>
+        <a type="button" class="btn bg-info waves-effect m-r-20" target="_blank" href="{{ url_for('pegawai.list') }}">
+            <span class="fas fa-user-graduate"></span>&nbsp;Daftar Pegawai
+        </a>       
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="myData" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th width=5%>No</th>
+                        <th>Nama Jabatan</th>
+                        <th>Jumlah</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for no, item in list %}
+                    <tr>
+                        <td class="text-center">
+                            {{ no }} 
+                        </td>
+                        <td>
+                            <a href="{{ url_for('jabatan.view', id=item.id) }}">{{ item.name }}</a>
+                        </td>
+                        <td class="text-center">
+                            {{ item.count }}
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-toggle" toggle="buttons">
+                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.delete', id=item.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
+                                    <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock contents %}
+
+{% block modals %}
+{% endblock modals %}
+
+{% block scripts %}
+{% endblock scripts %}
