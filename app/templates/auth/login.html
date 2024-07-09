@@ -43,6 +43,7 @@
       height: 95vh;
       background-image: url("{{ url_for('serveStaticResource', resource='img/gedung.png')}}");
       background-size: cover;
+      background-blend-mode:soft-light;
     }
 
     .login-logo,
@@ -76,13 +77,12 @@
     <div class="login-box">
       <div class="login-logo">
        <a href="/beranda">
-        <img width=100px src="{{ url_for('serveStaticResource', resource='img/logo.png') }}"
+        <img width=200px src="{{ url_for('serveStaticResource', resource='img/logo-1.png') }}"
         alt="Logo Perdata PN Kab. Kediri" class="brand-image"><br />
        </a>
       </div>
       <div class="card">
         <div class="card-body login-card-body">
-          <div class="text-center"><h2>Analisa Beban Kerja <br />PN Muara Bulian</h3></div>
           <p class="login-box-msg">
             <!-- <img src="{{ url_for('serveStaticResource', resource='img/logo.png') }}" alt="Logo Perdata PN Kab. Kediri" class="brand-image"> -->
           </p>
