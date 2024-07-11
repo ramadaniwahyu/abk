@@ -72,4 +72,4 @@ def form_b():
         
     list = enumerate(list, start=1)
     
-    return render_template('abk/form-b.html', list=list, title='Form B -  Inventarisir Jumlah Pemangku Jabatan')
+    return render_template('abk/form-b.html', list=list, title='Form ABK')
