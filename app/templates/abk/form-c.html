@@ -23,7 +23,7 @@
     </div>
     <div class="card-body">
         <div class="text-center">
-            <h2>Analisis Beban Kerja</h2>
+            <h2>Rekapitulasi Jumlah Beban Kerja Jabatan</h2>
         </div>
         <table class="no-table text-lg">
             <tr>
@@ -41,44 +41,28 @@
                     <tr class="text-center">
                         <th width=5%>No</th>
                         <th>Nama Jabatan</th>
-                        <th>Jumlah <br />Beban Kerja</th>
-                        <th>Kebutuhan <br />Pegawai</th>
-                        <th>Jumlah Pegawai <br />yang ada</th>
-                        <th>Kelebihan /<br />Kekurangan</th>
-                        <th>Efisiensi</th>
-                        <th>Prestasi <br />Kerja</th>
-                        <th>Keterangan</th>
+                        <th>Jumlah Beban Kerja</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for no, item in list %}
-                    <tr class="text-center">
-                        <td>
+                    <tr>
+                        <td class="text-center">
                             {{ no }} 
                         </td>
-                        <td class="text-left">
+                        <td>
                             {{ item.name }}
                         </td>
-                        <td>
-                            {{ item.beban }}
-                        </td>
-                        <td>
-                            {{ item.kebutuhan }}
-                        </td>
-                        <td>
+                        <td class="text-center">
                             {{ item.count }}
                         </td>
-                        <td>
-                            {{ item.plusminus }}
-                        </td>
-                        <td>
-                            {{ item.efisiensi }}
-                        </td>
-                        <td>
-                            {{ item.prestasi }}
-                        </td>
-                        <td>
-                            {{ item.ket }}
+                        <td class="text-center">
+                            <div class="btn-group btn-group-toggle" toggle="buttons">
+                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.delete', id=item.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
+                                    <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     {% endfor %}
