@@ -46,6 +46,7 @@ def form_b():
         # Efisiensi
         if hitung and size :
             ef = hitung / (size*1200)
+            ef = round(ef, 2)
         else:
             ef = 0
         i['efisiensi'] = ef
