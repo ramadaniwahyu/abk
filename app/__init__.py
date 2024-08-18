@@ -49,6 +49,9 @@ app.register_blueprint(pegawai_blueprint)
 from app.components.abk import abk as abk_blueprint
 app.register_blueprint(abk_blueprint)
 
+from app.components.kinerja import kinerja as kinerja_blueprint
+app.register_blueprint(kinerja_blueprint)
+
 # Errors Handling
 @app.errorhandler(403)
 def forbidden(error):

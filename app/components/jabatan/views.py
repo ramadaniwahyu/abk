@@ -1,8 +1,8 @@
 from flask import flash, redirect, render_template, url_for, request, session, app
 from flask_login import login_required
 from . import jabatan
-from ...models import Jabatan, Ikhtisar_Jabatan
-from .forms import JabatanForm, IkhtisarJabatanForm
+from ...models import Jabatan, Sasaran_Kinerja, Indikator_Kinerja, Ikhtisar_Jabatan
+from .forms import JabatanForm, SasaranKinerjaForm, IndikatorKinerjaForm, IkhtisarJabatanForm
 from ... import db
 
 
@@ -76,6 +76,65 @@ def delete(id):
     db.session.commit()
     flash('Data Jabatan "'+item.name+'" telah dihapus.')
     return redirect(url_for('jabatan.list'))
+
+@jabatan.route('/data-jabatan/<id>/sasaran-kinerja', methods=['GET', 'POST'])
+@login_required
+def list_sasaran(id):
+    item = Jabatan.query.get_or_404(id)
+    list = enumerate(Sasaran_Kinerja.query.filter_by(Sasaran_Kinerja.jabatan_id==item.id).all(), start=1)
+    form = SasaranKinerjaForm()
+    if form.validate_on_submit():
+        new = Sasaran_Kinerja(jabatan_id=id, name=form.name.data, desc=form.desc.data)
+        db.session.add(new)
+        db.session.commit()
+        
+        flash('Data Sasaran Kinerja berhasil ditambahkan', category='success')
+        return redirect(url_for('jabatan.list_sasaran', id=item.id))
+    
+    return render_template('jabatan/list-sasaran.html', list=list, form=form, title='Data Sasaran Kinerja Jabatan'+{item.name})
+
+@jabatan.route('/data-jabatan/<id>/sasaran-kinerja/<sasaran_id>', methods=['GET', 'POST'])
+@login_required
+def edit_sasaran(id, sasaran_id):
+    item = Jabatan.query.get_or_404(id)
+    item2 = Sasaran_Kinerja.query.get_or_404(sasaran_id)
+    form = SasaranKinerjaForm(obj=item2)
+    if form.validate_on_submit():
+        item2.name=form.name.data
+        item2.desc=form.desc.data
+        
+        db.session.commit()
+        
+        flash('Data Sasaran Kinerja berhasil diubah', category='success')
+        return redirect(url_for('jabatan.list_sasaran', id=item.id))
+    
+    return render_template('jabatan/edit-sasaran.html', item2=item2, form=form, title='Edit Sasaran Kinerja Jabatan'+{item.name})
+
+@jabatan.route('/data-jabatan/<id>/sasaran-kinerja/<sasaran_id>/hapus', methods=['GET', 'POST'])
+@login_required
+def delete_sasaran(id, sasaran_id):
+    item2 = Sasaran_Kinerja.query.get_or_404(sasaran_id)
+    db.session.delete(item2)
+    db.session.commit()
+    flash('Data Sasaran Kinerja berhasil dihapus', category='success')
+    return redirect(url_for('jabatan.list_sasaran', id=id))
+
+@jabatan.route('/data-jabatan/<id>/indikator-kinerja', methods=['GET', 'POST'])
+@login_required
+def list_indikator(id):
+    item = Jabatan.query.get_or_404(id)
+    list = enumerate(Indikator_Kinerja.query.filter_by(Indikator_Kinerja.jabatan_id==item.id).all(), start=1)
+    form = IndikatorKinerjaForm()
+    if form.validate_on_submit():
+        new = Indikator_Kinerja(jabatan_id=id, sasaran_kinerja=form.sasaran_kinerja.data, name=form.name.data, desc=form.desc.data)
+        db.session.add(new)
+        db.session.commit()
+        
+        flash('Data Sasaran Kinerja berhasil ditambahkan', category='success')
+        return redirect(url_for('jabatan.list_sasaran', id=item.id))
+    
+    return render_template('jabatan/list-sasaran.html', list=list, form=form, title='Data Sasaran Kinerja Jabatan'+{item.name})
+
 
 @jabatan.route('/data-jabatan/uraian/<id>/edit', methods=['GET', 'POST'])
 @login_required

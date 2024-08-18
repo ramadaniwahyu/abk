@@ -49,7 +49,12 @@
                             <td width=5%>Jabatan</td>
                             <td width=2%>:</td>
                             <td width=20%>
-                                {{ item.jabatan }}
+                                {{ item.jabatan }} <br />
+                                {% if item.satker %} 
+                                {{ item.satker }}
+                                {% else %}
+                                - 
+                                {% endif %}
                             </td>
                         </tr>
                     </tbody>
@@ -64,7 +69,7 @@
                 <div class="text-center">
                     <br />
                     {% if item.foto %}
-                    <img src="/assets/img/{{ item.foto }}" alt="{{ item.name }}" width="300">
+                    <img src="/uploads/foto/{{ item.foto }}" alt="{{ item.name }}" width="300">
                     {% else %}
                     <img src="{{ url_for('serveStaticResource', resource='img/faces/face11.jpg') }}" alt="{{ item.name }}" width="300">
                     {% endif %}

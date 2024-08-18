@@ -114,13 +114,24 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-header">Menu Utama</li>
+          <li class="nav-header">#1</li>
           <li class="nav-item">
             <a href="/beranda" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>Beranda</p>
             </a>
           </li>
+
+          <li class="nav-header">Penilaian Kinerja</li>
+          <li class="nav-item">
+            <a href="/kinerja" class="nav-link">
+              <i class="nav-icon fas fa-pen-square"></i>
+              <p>Penilaian Kinerja</p>
+            </a>
+          </li>
+
+          {% if current_user.is_admin %}
+          <li class="nav-header">Menu Kepegawaian</li>
           <li class="nav-item">
             <a href="/data-pegawai" class="nav-link">
               <i class="nav-icon fas fa-user-graduate"></i>
@@ -139,7 +150,7 @@
               <p>Analisis Beban Kerja</p>
             </a>
           </li>
-          {% if current_user.is_admin %}
+
           <li class="nav-header">Pengaturan</li>
           <li class="nav-item">
             <a href="/pengguna" class="nav-link">

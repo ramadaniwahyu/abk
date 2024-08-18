@@ -24,9 +24,8 @@
                 <thead>
                     <tr>
                         <th width=5%>No</th>
-                        <th>Nama Pegawai</th>
-                        <th>NIP</th>
-                        <th>Jabatan / Satuan Kerja</th>
+                        <th>Nama Pengguna</th>
+                        <th>Email</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -37,23 +36,21 @@
                             {{ no }} 
                         </td>
                         <td>
-                            {% if item.foto %}
-                            <img src="/uploads/foto/{{ item.foto }}" alt="{{ item.name }}" width="30">
-                            {% else %}
-                            <img src="img/faces/face1.jpg" alt="{{ item.name }}" width="30">
-                            {% endif %} &nbsp;
-                            <a href="{{ url_for('pegawai.view', id=item.id) }}">{{ item.name }}</a><br />
+                            <a href="#">{{ item.name }}</a>
+                            {% if item.is_admin %}
+                            <span class="right badge badge-danger">Administrator</span>
+                            {% endif %}
+                            <br />
+                            {% if item.pegawai %}
+                            <small>{{ item.pegawai }}</small>
+                            {% endif %}
                         </td>
                         <td>
-                            {{ item.nomor }}
-                        </td>
-                        <td>
-                            {{item.jabatan}}<br />
-                            {{item.satker}}
+                            {{ item.email }}
                         </td>
                         <td class="text-center">
                             <div class="btn-group btn-group-toggle" toggle="buttons">
-                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('pegawai.delete', id=item.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
+                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="#" onclick="return confirm('Yakin menghapus data ini?');">
                                     <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
                                 </a>
                             </div>

@@ -1,10 +1,15 @@
-from flask import flash, redirect, render_template, url_for, request, session, app
+from flask import flash, redirect, render_template, url_for, request, abort
 from flask_login import login_required, login_user, logout_user, current_user
 from . import auth
 from ...models import User
-from .forms import LoginForm, PenggunaForm, PasswordForm
+from .forms import LoginForm, UserAdminForm, UserForm, PasswordForm
 from ... import db
 
+def check_admin():
+    
+    if not(current_user.is_admin):
+        abort(403)
+    
 
 @auth.route('/masuk', methods=['GET', 'POST'])
 def login():
@@ -51,7 +56,7 @@ def profile():
 
 @auth.route('/profil/ganti-password', methods=['GET', 'POST'])
 @login_required
-def profil_password():
+def profile_password():
     pass
     # id = current_user.id
     # pengguna = Pengguna.query.get_or_404(id)
@@ -66,3 +71,61 @@ def profil_password():
     #         flash('Password lama salah.')
     
     # return render_template('auth/password.html', form=form, pengguna=pengguna, title='Ganti Password')
+    
+@auth.route('/pengguna', methods=['GET', 'POST'])
+@login_required
+def user_list():
+    check_admin()
+    
+    list = enumerate(User.query.all(), start=1)
+    form = UserAdminForm()
+    if form.validate_on_submit():
+        user = User(
+            name=form.name.data, 
+            email=form.email.data, 
+            password=form.password.data,
+            is_admin = form.is_admin.data,
+            pegawai = form.pegawai.data
+            )
+        user_exist = User.query.filter_by(name=form.name.data).first()
+        if user_exist is None:
+            db.session.add(user)
+            db.session.commit()
+            # db.session.refresh(user)
+            flash('Pengguna telah ditambahkan.', 'info')
+            return redirect(url_for('auth.user_list'))
+        else:
+            flash('Nama Pengguna sudah ada.', 'danger')
+    
+    return render_template('auth/user-list.html', list=list, form=form, title='Daftar Pengguna')
+
+@auth.route('/pengguna/<id>', methods=['GET', 'POST'])
+@login_required
+def user_edit(id):
+    check_admin()
+    
+    item = User.query.get_or_404(id)
+    form = UserAdminForm(obj=item)
+    if form.validate_on_submit():
+        item.email = form.email.data
+        item.is_admin = form.is_admin.data
+        item.password = form.password.data
+        item.pegawai = form.pegawai.data
+        
+        db.session.commit()
+        flash('Nama telah diubah.', 'info')
+        return redirect(url_for('auth.user_list'))
+    
+    return render_template('auth/user-edit.html', list=list, form=form, title='Edit Pengguna')
+    
+    
+@auth.route('/pengguna/<id>/hapus', methods=['GET', 'POST'])
+@login_required
+def user_delete(id):
+    check_admin()
+    
+    item = User.query.get_or_404(id)
+    db.session.delete(item)
+    db.session.commit()
+    flash('Data Pengguna telah dihapus.', 'success')
+    return redirect(url_for('auth.user_list'))
