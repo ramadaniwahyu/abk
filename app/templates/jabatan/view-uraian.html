@@ -21,12 +21,12 @@
         <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
             <span class="fas fa-plus"></span>&nbsp;Edit Jabatan
         </a>
-        <!-- <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
+        <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
             <span class="fas fa-list"></span>&nbsp;Sasaran Kinerja
         </a>
         <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
             <span class="fas fa-stream"></span>&nbsp;Indikator Kinerja
-        </a> -->
+        </a>
     </div>
     <div class="card-body">
         <div>
@@ -62,12 +62,6 @@
                 <thead>
                     <tr>
                         <th width=5%>No</th>
-                        <th>Sasaran Kinerja</th>
-                        <th>Keterangan</th>
-                        <th></th>
-                    </tr>
-                    <!-- <tr>
-                        <th width=5%>No</th>
                         <th>Uraian Tugas</th>
                         <th>Satuan</th>
                         <th>Volume Kerja</th>
@@ -75,7 +69,7 @@
                         <th>Beban Kerja</th>
                         <th>Peralatan / Keterangan</th>
                         <th></th>
-                    </tr> -->
+                    </tr>
                 </thead>
                 <tbody>
                     {% for no, data in list %}
@@ -84,22 +78,49 @@
                             {{ no }} 
                         </td>
                         <td>
-                            <a href="{{ url_for('jabatan.view_sasaran', id=data.jabatan_id, sasaran_id=data.id) }}">
-                                {{ data.name }}
-                            </a>
+                            {{ data.uraian_tugas }}
+                        </td>
+                        <td class="text-center">
+                            {{ data.satuan }}
+                        </td>
+                        <td class="text-center">
+                            {{ data.volume }}
+                        </td>
+                        <td class="text-center">
+                            {{ data.waktu }}
+                        </td>
+                        <td class="text-center">
+                            {{ data.volume * data.waktu }}
                         </td>
                         <td>
+                            <strong>Peralatan :</strong><br />
+                            {{ data.peralatan }} <br /><br />
+                            <strong>Keterangan :</strong><br />
                             {{ data.desc }}
                         </td>
                         <td class="text-center">
                             <div class="btn-group btn-group-toggle" toggle="buttons">
-                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.delete_sasaran', id=data.jabatan_id, sasaran_id=data.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
+                                <!-- <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit_uraian', id=data.id) }}">
+                                    <i data-toggle="tooltip" data-placement="top" title="Edit" class="fas fa-edit"></i>
+                                </a>
+                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.delete_uraian', id=data.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
+                                    <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
+                                </a> -->
+                                <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit_uraian', id=data.id) }}">
+                                    <i data-toggle="tooltip" data-placement="top" title="Edit" class="fas fa-edit"></i>
+                                </a>
+                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.delete_uraian', id=data.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
                                     <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
                                 </a>
                             </div>
                         </td>
                     </tr>
                     {% endfor %}
+                    <tr class="text-center">
+                        <td colspan="5"><strong>Total Beban Kerja</strong></td>
+                        <td><strong>{{total}}</strong></td>
+                        <td colspan="2"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -112,7 +133,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">{{item.name}} -Sasaran Kinerja Baru</h4>
+                <h4 class="modal-title">{{item.name}} - Uraian Tugas Baru</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">

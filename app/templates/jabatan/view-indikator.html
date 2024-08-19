@@ -8,6 +8,7 @@
 <ol class="breadcrumb float-sm-right">
     <li class="breadcrumb-item"><a href="/beranda"><i class="fas fa-tachometer-alt"></i> Beranda</a></li>
     <li class="breadcrumb-item"><a href="/data-jabatan"><i class="fas fa-graduation-cap"></i> Jabatan</a></li>
+    <li class="breadcrumb-item"><a href="/data-jabatan/{{item3.jabatan_id}}/sasaran-kinerja/{{item3.sasaran_kinerja_id}}"><i class="fas fa-th-list"></i> Sasaran Kinerja</a></li>
     <li class="breadcrumb-item active"> {{ title }}</li>
 </ol>
 {% endblock breadcrumbs %}
@@ -15,34 +16,28 @@
 {% block contents %}
 <div class="card">
     <div class="card-header text-right">
-        <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.list') }}">
+        <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.view_sasaran', id=item3.jabatan_id, sasaran_id=item3.id) }}">
             <span class="fas fa-arrow-left"></span>&nbsp;Kembali
         </a>
-        <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
-            <span class="fas fa-plus"></span>&nbsp;Edit Jabatan
+        <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit_indikator', id=item3.jabatan_id, sasaran_id=item3.sasaran_kinerja_id, indikator_id=item3.id) }}">
+            <span class="fas fa-plus"></span>&nbsp;Edit Indikator
         </a>
-        <!-- <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
-            <span class="fas fa-list"></span>&nbsp;Sasaran Kinerja
-        </a>
-        <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
-            <span class="fas fa-stream"></span>&nbsp;Indikator Kinerja
-        </a> -->
     </div>
     <div class="card-body">
         <div>
             <table class="table no-border">
                 <tbody>
                     <tr>
-                        <td width=5%>Nama Jabatan</td>
+                        <td width=5%>Nama Indikator Kinerja</td>
                         <td width=2%>:</td>
-                        <td><strong>{{ item.name }}</strong></td>
+                        <td><strong>{{ item3.name }}</strong></td>
                     </tr>
                     <tr>
                         <td width=5%>Keterangan / Deskripsi</td>
                         <td width=2%>:</td>
                         <td width=20%>
-                            {% if item.desc %}
-                            {{ item.desc }}
+                            {% if item3.desc %}
+                            {{ item3.desc }}
                             {% else %}
                             <i>Belum ada deskripsi</i>
                             {% endif%}
@@ -62,20 +57,10 @@
                 <thead>
                     <tr>
                         <th width=5%>No</th>
-                        <th>Sasaran Kinerja</th>
+                        <th>Uraian Tugas</th>
                         <th>Keterangan</th>
                         <th></th>
                     </tr>
-                    <!-- <tr>
-                        <th width=5%>No</th>
-                        <th>Uraian Tugas</th>
-                        <th>Satuan</th>
-                        <th>Volume Kerja</th>
-                        <th>Waktu (Menit)</th>
-                        <th>Beban Kerja</th>
-                        <th>Peralatan / Keterangan</th>
-                        <th></th>
-                    </tr> -->
                 </thead>
                 <tbody>
                     {% for no, data in list %}
@@ -84,7 +69,7 @@
                             {{ no }} 
                         </td>
                         <td>
-                            <a href="{{ url_for('jabatan.view_sasaran', id=data.jabatan_id, sasaran_id=data.id) }}">
+                            <a href="{{ url_for('jabatan.view_indikator', id=data.jabatan_id, sasaran_id=data.sasaran_kinerja_id, indikator_id=data.id) }}">
                                 {{ data.name }}
                             </a>
                         </td>
@@ -93,6 +78,9 @@
                         </td>
                         <td class="text-center">
                             <div class="btn-group btn-group-toggle" toggle="buttons">
+                                <!-- <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit_sasaran', id=data.jabatan_id, sasaran_id=data.id) }}">
+                                    <i data-toggle="tooltip" data-placement="top" title="Edit" class="fas fa-edit"></i>
+                                </a> -->
                                 <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.delete_sasaran', id=data.jabatan_id, sasaran_id=data.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
                                     <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
                                 </a>
@@ -112,7 +100,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">{{item.name}} -Sasaran Kinerja Baru</h4>
+                <h4 class="modal-title">{{item3.name}} - Indikator Kinerja Baru</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
