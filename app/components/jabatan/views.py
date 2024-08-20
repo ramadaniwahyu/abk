@@ -178,6 +178,12 @@ def view_indikator(id, sasaran_id, indikator_id):
     item = Jabatan.query.get_or_404(id)
     item2 = Sasaran_Kinerja.query.get_or_404(sasaran_id)
     item3 = Indikator_Kinerja.query.get_or_404(indikator_id)
+    uraian = Ikhtisar_Jabatan.query.filter(Ikhtisar_Jabatan.indikator_kinerja_id==item3.id).all()
+    total = 0
+    for i in uraian:
+        beban = i.volume * i.waktu
+        total = total + beban
+    list = enumerate(uraian, start=1)
     form = IkhtisarJabatanForm()
     if form.validate_on_submit():
         new = Ikhtisar_Jabatan(
@@ -196,7 +202,7 @@ def view_indikator(id, sasaran_id, indikator_id):
         flash('Uraian tugas baru telah ditambahkan')
         return redirect(url_for('jabatan.view_indikator', id=item.id, sasaran_id=item2.id, indikator_id=item3.id))
     
-    return render_template('jabatan/view-indikator.html', item3=item3, form=form, title='View Indikator Kinerja Jabatan')
+    return render_template('jabatan/view-indikator.html', item3=item3, list=list, total=total, form=form, title='View Indikator Kinerja Jabatan')
 
 @jabatan.route('/data-jabatan/<id>/sasaran-kinerja/<sasaran_id>/indikator-kinerja/<indikator_id>/edit', methods=['GET', 'POST'])
 @login_required
@@ -211,9 +217,9 @@ def edit_indikator(id, sasaran_id, indikator_id):
         
         db.session.commit()
         flash('Data Indikator Kinerja berhasil diubah', category='success')
-        return redirect(url_for('jabatan.list_indikator', id=item2.id))
+        return redirect(url_for('jabatan.view_indikator', id=item3.jabatan_id, sasaran_id=item3.sasaran_kinerja_id, indikator_id=item3.id))
     
-    return render_template('jabatan/edit-indikator.html', item3=item3, form=form, title='Edit Indikator Kinerja Jabatan'+{item.name})
+    return render_template('jabatan/edit-indikator.html', item3=item3, form=form, title='Edit Indikator Kinerja Jabatan')
 
 @jabatan.route('/data-jabatan/<id>/sasaran-kinerja/<sasaran_id>/indikator-kinerja/<indikator_id>/hapus', methods=['GET', 'POST'])
 @login_required
@@ -229,6 +235,26 @@ def delete_indikator(id, sasaran_id, indikator_id):
     db.session.commit()
     flash('Data Indikator Kinerja berhasil dihapus', category='success')
     return redirect(url_for('jabatan.list_indikator', id=sasaran_id))
+
+@jabatan.route('/data-jabatan/<id>/sasaran-kinerja/<sasaran_id>/indikator-kinerja/<indikator_id>/uraian/<uraian_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_uraian_(id, sasaran_id, indikator_id, uraian_id):
+    item = Indikator_Kinerja.query.get_or_404(indikator_id)
+    item2 = Ikhtisar_Jabatan.query.get_or_404(uraian_id)
+    form = IkhtisarJabatanForm(obj=item2)
+    if form.validate_on_submit():
+        item.uraian_tugas = form.uraian_tugas.data
+        item.satuan = form.satuan.data
+        item.volume = form.volume.data
+        item.waktu = form.waktu.data
+        item.peralatan = form.peralatan.data
+        item.desc = form.desc.data
+
+        db.session.commit()
+        flash('Uraian tugas telah diubah.', category='success')
+        return redirect(url_for('jabatan.view_indikator', id=item2.jabatan_id, sasaran_id=item.sasaran_kinerja_id, indikator_id=item.id, uraian_id=item2.id))
+    
+    return render_template('jabatan/edit-uraian.html', form=form, item=item, item2=item2, title='Edit Ikhtisar Jabatan')
 
 @jabatan.route('/data-jabatan/uraian/<id>/edit', methods=['GET', 'POST'])
 @login_required

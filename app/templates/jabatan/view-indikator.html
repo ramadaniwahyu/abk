@@ -58,7 +58,11 @@
                     <tr>
                         <th width=5%>No</th>
                         <th>Uraian Tugas</th>
-                        <th>Keterangan</th>
+                        <th>Satuan</th>
+                        <th>Volume Kerja</th>
+                        <th>Waktu (Menit)</th>
+                        <th>Beban Kerja</th>
+                        <th>Peralatan / Keterangan</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -69,25 +73,49 @@
                             {{ no }} 
                         </td>
                         <td>
-                            <a href="{{ url_for('jabatan.view_indikator', id=data.jabatan_id, sasaran_id=data.sasaran_kinerja_id, indikator_id=data.id) }}">
-                                {{ data.name }}
-                            </a>
+                            {{ data.uraian_tugas }}
+                        </td>
+                        <td class="text-center">
+                            {{ data.satuan }}
+                        </td>
+                        <td class="text-center">
+                            {{ data.volume }}
+                        </td>
+                        <td class="text-center">
+                            {{ data.waktu }}
+                        </td>
+                        <td class="text-center">
+                            {{ data.volume * data.waktu }}
                         </td>
                         <td>
+                            <strong>Peralatan :</strong><br />
+                            {{ data.peralatan }} <br /><br />
+                            <strong>Keterangan :</strong><br />
                             {{ data.desc }}
                         </td>
                         <td class="text-center">
                             <div class="btn-group btn-group-toggle" toggle="buttons">
-                                <!-- <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit_sasaran', id=data.jabatan_id, sasaran_id=data.id) }}">
+                                <!-- <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit_uraian', id=data.id) }}">
                                     <i data-toggle="tooltip" data-placement="top" title="Edit" class="fas fa-edit"></i>
+                                </a>
+                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.delete_uraian', id=data.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
+                                    <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
                                 </a> -->
-                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.delete_sasaran', id=data.jabatan_id, sasaran_id=data.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
+                                <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit_uraian_', uraian_id=data.id, indikator_id=data.indikator_kinerja_id, sasaran_id=item3.sasaran_kinerja_id, id=data.jabatan_id) }}">
+                                    <i data-toggle="tooltip" data-placement="top" title="Edit" class="fas fa-edit"></i>
+                                </a>
+                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.delete_uraian', id=data.id) }}" onclick="return confirm('Yakin menghapus data ini?');">
                                     <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
                                 </a>
                             </div>
                         </td>
                     </tr>
                     {% endfor %}
+                    <tr class="text-center">
+                        <td colspan="5"><strong>Total Beban Kerja</strong></td>
+                        <td><strong>{{total}}</strong></td>
+                        <td colspan="2"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
