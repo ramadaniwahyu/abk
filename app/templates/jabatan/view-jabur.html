@@ -60,13 +60,13 @@
         <div class="table-responsive">
             <table id="myDataT" class="table table-bordered table-striped table-hover">
                 <thead>
-                    <tr>
+                    <!-- <tr>
                         <th width=5%>No</th>
                         <th>Sasaran Kinerja</th>
                         <th>Keterangan</th>
                         <th></th>
-                    </tr>
-                    <!-- <tr>
+                    </tr> -->
+                    <tr>
                         <th width=5%>No</th>
                         <th>Uraian Tugas</th>
                         <th>Satuan</th>
@@ -75,7 +75,7 @@
                         <th>Beban Kerja</th>
                         <th>Peralatan / Keterangan</th>
                         <th></th>
-                    </tr> -->
+                    </tr>
                 </thead>
                 <tbody>
                     {% for no, data in list %}
@@ -85,11 +85,24 @@
                         </td>
                         <td>
                             <a href="{{ url_for('jabatan.view_sasaran', id=data.jabatan_id, sasaran_id=data.id) }}">
-                                {{ data.name }}
+                                {{ data.uraian_tugas }}
                             </a>
                         </td>
                         <td>
-                            {{ data.desc }}
+                            {{ data.satuan }}
+                        </td>
+                        <td>
+                            {{ data.volume }}
+                        </td>
+                        <td>
+                            {{ data.waktu }}
+                        </td>
+                        <td>
+                            {{ data.volume * data.waktu }}
+                        </td>
+                        <td>
+                            Peralatan : <br /> {{ data.peralatan }}<br /><br />
+                            Keterangan : <br /> {{ data.desc }}
                         </td>
                         <td class="text-center">
                             <div class="btn-group btn-group-toggle" toggle="buttons">
@@ -100,6 +113,11 @@
                         </td>
                     </tr>
                     {% endfor %}
+                    <tr class="text-bold">
+                        <td class="text-center" colspan="5">Total</td>
+                        <td>{{ total }}</td>
+                        <td colspan="2"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -126,8 +144,8 @@
 {% block scripts %}
 <script>
 $(document).ready(function () {
-    $("#sasaran").prop("disabled", true);
-    $("#indikator").prop("disabled", true);
+    // $("#sasaran").prop("disabled", true);
+    // $("#indikator").prop("disabled", true);
 
     var jabatan_id = item.id;
 
@@ -142,14 +160,12 @@ $(document).ready(function () {
                 $.each(data, function (key, val) {
                 var option_item = '<option value="' + val.id + '">' + val.name + '</option>'
                 $('#sasaran').append(option_item);
-                $("#sasaran").prop("disabled", false);
                 });
             }
         );
 
     $('#sasaran').change(function () {
 
-        $("#indikator").prop("disabled", true);
         var sasaran_id = $('#sasaran').val();
 
         $.getJSON(
@@ -163,7 +179,7 @@ $(document).ready(function () {
                 $.each(data, function (key, val) {
                 var option_item = '<option value="' + val.id + '">' + val.name + '</option>'
                 $('#indikator').append(option_item);
-                $("#indikator").prop("disabled", false);
+                
                 });
             }
         );
