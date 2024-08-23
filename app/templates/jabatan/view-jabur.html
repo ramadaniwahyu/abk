@@ -21,12 +21,9 @@
         <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
             <span class="fas fa-plus"></span>&nbsp;Edit Jabatan
         </a>
-        <!-- <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
-            <span class="fas fa-list"></span>&nbsp;Sasaran Kinerja
+        <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.view_jabatan_sasaran', id=item.id) }}">
+            <span class="fas fa-stream"></span>&nbsp;Sasaran Kinerja
         </a>
-        <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
-            <span class="fas fa-stream"></span>&nbsp;Indikator Kinerja
-        </a> -->
     </div>
     <div class="card-body">
         <div>
@@ -60,12 +57,6 @@
         <div class="table-responsive">
             <table id="myDataT" class="table table-bordered table-striped table-hover">
                 <thead>
-                    <!-- <tr>
-                        <th width=5%>No</th>
-                        <th>Sasaran Kinerja</th>
-                        <th>Keterangan</th>
-                        <th></th>
-                    </tr> -->
                     <tr>
                         <th width=5%>No</th>
                         <th>Uraian Tugas</th>
@@ -84,9 +75,11 @@
                             {{ no }} 
                         </td>
                         <td>
-                            <a href="{{ url_for('jabatan.view_sasaran', id=data.jabatan_id, sasaran_id=data.id) }}">
+                            <a href="{{ url_for('jabatan.edit_uraian', id=item.id, uraian_id=data.id) }}">
                                 {{ data.uraian_tugas }}
-                            </a>
+                            </a><br /><br />
+                            <strong>Sasaran Kinerja</strong><br />{{ data.indikator_kinerja.sasaran_kinerja }} <br /><br />
+                            <strong>Indikator Kinerja</strong><br />{{ data.indikator_kinerja }}
                         </td>
                         <td>
                             {{ data.satuan }}
@@ -142,52 +135,6 @@
 {% endblock modals %}
 
 {% block scripts %}
-<script>
-$(document).ready(function () {
-    // $("#sasaran").prop("disabled", true);
-    // $("#indikator").prop("disabled", true);
-
-    var jabatan_id = item.id;
-
-    $.getJSON(
-            '/get-sasaran' + '/' + jabatan_id,
-            function (data) {
-
-                // Remove old options
-                $('#sasaran').find('option').remove();
-
-                // Add new items
-                $.each(data, function (key, val) {
-                var option_item = '<option value="' + val.id + '">' + val.name + '</option>'
-                $('#sasaran').append(option_item);
-                });
-            }
-        );
-
-    $('#sasaran').change(function () {
-
-        var sasaran_id = $('#sasaran').val();
-
-        $.getJSON(
-            '/get-indikator' + '/' + sasaran_id,
-            function (data) {
-
-                // Remove old options
-                $('#indikator').find('option').remove();
-
-                // Add new items
-                $.each(data, function (key, val) {
-                var option_item = '<option value="' + val.id + '">' + val.name + '</option>'
-                $('#indikator').append(option_item);
-                
-                });
-            }
-        );
-    });
-
-    $('#defaultModal').on('hidden.bs.modal', function () {
-        location.reload(true);
-    })
-});
-</script>
+<script type="text/javascript" id="helper" data-name="{{item.id}}" src="/dist/js/pages/jabatan.js"></script>
+<!-- <script type="text/javascript" data-jabatan="{{item.id}}" src="/dist/js/pages/jabatan.js"></script> -->
 {% endblock scripts %}

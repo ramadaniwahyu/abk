@@ -8,6 +8,7 @@
 <ol class="breadcrumb float-sm-right">
     <li class="breadcrumb-item"><a href="/beranda"><i class="fas fa-tachometer-alt"></i> Beranda</a></li>
     <li class="breadcrumb-item"><a href="/data-jabatan"><i class="fas fa-graduation-cap"></i> Jabatan</a></li>
+    <li class="breadcrumb-item"><a href="/data-jabatan/{{ item.id }}"><i class="fas fa-graduation-cap"></i> View Jabatan</a></li>
     <li class="breadcrumb-item active"> {{ title }}</li>
 </ol>
 {% endblock breadcrumbs %}
@@ -15,18 +16,9 @@
 {% block contents %}
 <div class="card">
     <div class="card-header text-right">
-        <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.list') }}">
+        <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('jabatan.view', id=item.id) }}">
             <span class="fas fa-arrow-left"></span>&nbsp;Kembali
         </a>
-        <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
-            <span class="fas fa-plus"></span>&nbsp;Edit Jabatan
-        </a>
-        <!-- <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
-            <span class="fas fa-list"></span>&nbsp;Sasaran Kinerja
-        </a>
-        <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
-            <span class="fas fa-stream"></span>&nbsp;Indikator Kinerja
-        </a> -->
     </div>
     <div class="card-body">
         <div>

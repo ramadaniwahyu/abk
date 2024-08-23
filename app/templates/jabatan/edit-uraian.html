@@ -8,8 +8,7 @@
 <ol class="breadcrumb float-sm-right">
     <li class="breadcrumb-item"><a href="/beranda"><i class="fas fa-tachometer-alt"></i> Beranda</a></li>
     <li class="breadcrumb-item"><a href="/data-jabatan"><i class="fas fa-graduation-cap"></i> Jabatan</a></li>
-    <li class="breadcrumb-item"><a href="/data-jabatan/{{item.jabatan_id}}"><i class="fas fa-graduation-cap"></i> Sasaran Kinerja</a></li>
-    <li class="breadcrumb-item"><a href="/data-jabatan/{{item.jabatan_id}}/sasaran-kinerja/{{item.sasaran_id}}/indikator-kinerja/{{item.id}}"><i class="fas fa-graduation-cap"></i> Indikator Kinerja</a></li>
+    <li class="breadcrumb-item"><a href="/data-jabatan/{{item.jabatan_id}}"><i class="fas fa-graduation-cap"></i> View Jabatan</a></li>
     <li class="breadcrumb-item active">{{title}}</li>
 </ol>
 {% endblock breadcrumbs %}
@@ -30,4 +29,5 @@
 {% endblock modals %}
 
 {% block scripts %}
+<script type="text/javascript" id="helper" data-name="{{item.id}}" src="/dist/js/pages/jabatan.js"></script>
 {% endblock scripts %}

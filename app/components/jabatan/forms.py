@@ -30,16 +30,16 @@ class IkhtisarJabatanForm(FlaskForm):
     submit = SubmitField('Simpan')
     
 class IkhtisarJabatanForm(FlaskForm):
-    sasaran = QuerySelectField('Sasaran Kinerja', 
+    sasaran = QuerySelectField('Sasaran Kinerja', validators=[DataRequired()],
                                query_factory=lambda: Sasaran_Kinerja.query.order_by(Sasaran_Kinerja.created_on.asc()).all(), 
                                get_label='name', allow_blank=True, blank_text='Belum ada pilihan')
-    indikator = QuerySelectField('Indikator Kinerja', 
+    indikator = QuerySelectField('Indikator Kinerja', validators=[DataRequired()],
                                query_factory=lambda: Indikator_Kinerja.query.order_by(Indikator_Kinerja.created_on.asc()).all(), 
                                get_label='name', allow_blank=True, blank_text='Belum ada pilihan')
-    uraian_tugas = TextAreaField('Uraian Tugas', validators=[DataRequired()])
+    uraian_tugas = TextAreaField('Uraian Tugas', validators=[DataRequired()], render_kw={"rows": 5})
     satuan = SelectField('Satuan', choices=[('', 'Belum ada pilihan'), ('Kegiatan', 'Kegiatan'), ('Dokumen', 'Dokumen')], validators=[DataRequired()])
     volume = FloatField('Volume Kerja', validators=[DataRequired()])
     waktu = IntegerField('Norma Waktu (menit)', validators=[DataRequired()])
-    peralatan = TextAreaField('Peralatan yang digunakan')
-    desc = TextAreaField('Keterangan')
+    peralatan = TextAreaField('Peralatan yang digunakan', render_kw={"rows": 5})
+    desc = TextAreaField('Keterangan', render_kw={"rows": 5})
     submit = SubmitField('Simpan')

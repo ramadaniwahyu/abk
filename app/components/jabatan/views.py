@@ -21,21 +21,21 @@ def list():
     
     return render_template('jabatan/list.html', list=list, form=form, title='Data Jabatan')
 
-# @jabatan.route('/data-jabatan/<id>', methods=['GET', 'POST'])
-# @login_required
-# def view(id):
-#     item = Jabatan.query.get_or_404(id)
-#     list = enumerate(Sasaran_Kinerja.query.filter(Sasaran_Kinerja.jabatan_id==item.id).all(), start=1)
-#     form = SasaranKinerjaForm()
-#     if form.validate_on_submit():
-#         new = Sasaran_Kinerja(jabatan_id=id, name=form.name.data, desc=form.desc.data)
-#         db.session.add(new)
-#         db.session.commit()
+@jabatan.route('/data-jabatan/<id>/sasaran-kinerja', methods=['GET', 'POST'])
+@login_required
+def view_jabatan_sasaran(id):
+    item = Jabatan.query.get_or_404(id)
+    list = enumerate(Sasaran_Kinerja.query.filter(Sasaran_Kinerja.jabatan_id==item.id).all(), start=1)
+    form = SasaranKinerjaForm()
+    if form.validate_on_submit():
+        new = Sasaran_Kinerja(jabatan_id=id, name=form.name.data, desc=form.desc.data)
+        db.session.add(new)
+        db.session.commit()
         
-#         flash('Data Sasaran Kinerja berhasil ditambahkan', category='success')
-#         return redirect(url_for('jabatan.view', id=item.id))
+        flash('Data Sasaran Kinerja berhasil ditambahkan', category='success')
+        return redirect(url_for('jabatan.view', id=item.id))
     
-#     return render_template('jabatan/view.html', item=item, list=list, form=form, title='View Data Jabatan')
+    return render_template('jabatan/view.html', item=item, list=list, form=form, title='View Data Sasaran Jabatan')
 
 @jabatan.route('/data-jabatan/<id>', methods=['GET', 'POST'])
 @login_required
@@ -51,6 +51,7 @@ def view(id):
     if form.validate_on_submit():
         new = Ikhtisar_Jabatan(
             jabatan_id = item.id,
+            indikator = form.indikator.data,
             uraian_tugas = form.uraian_tugas.data,
             satuan = form.satuan.data,
             volume = form.volume.data,
@@ -256,12 +257,14 @@ def edit_uraian_(id, sasaran_id, indikator_id, uraian_id):
     
     return render_template('jabatan/edit-uraian.html', form=form, item=item, item2=item2, title='Edit Ikhtisar Jabatan')
 
-@jabatan.route('/data-jabatan/uraian/<id>/edit', methods=['GET', 'POST'])
+@jabatan.route('/data-jabatan/<id>/uraian/<uraian_id>/edit', methods=['GET', 'POST'])
 @login_required
-def edit_uraian(id):
+def edit_uraian(id, uraian_id):
     item = Ikhtisar_Jabatan.query.get_or_404(id)
-    form = IkhtisarJabatanForm(obj=item)
+    item2 = Ikhtisar_Jabatan.query.get_or_404(uraian_id)
+    form = IkhtisarJabatanForm(obj=item2)
     if form.validate_on_submit():
+        item.indikator_kinerja =  form.indikator.data
         item.uraian_tugas = form.uraian_tugas.data
         item.satuan = form.satuan.data
         item.volume = form.volume.data
@@ -273,7 +276,7 @@ def edit_uraian(id):
         flash('Uraian tugas telah diubah.', category='success')
         return redirect(url_for('jabatan.view', id=item.jabatan_id))
     
-    return render_template('jabatan/edit-uraian.html', form=form, item=item, title='Edit Ikhtisar Jabatan')
+    return render_template('jabatan/edit-uraian2.html', form=form, item=item, item2=item2,title='Edit Ikhtisar Jabatan')
 
 @jabatan.route('/data-jabatan/uraian/<id>/hapus', methods=['GET', 'POST'])
 @login_required
@@ -284,9 +287,10 @@ def delete_uraian(id):
     flash('Data Uraian Tugas telah dihapus', category='danger')
     return redirect(url_for('jabatan.view', id=item.jabatan_id))
 
-@jabatan.route('/get-sasaran/<jabatan_id>', methods=['GET', 'POST'])
+@jabatan.route('/get-sasaran', methods=['GET', 'POST'])
 @login_required
-def get_sasaran(jabatan_id):
+def get_sasaran():
+    jabatan_id = request.args.get('id')
     sasaran = Sasaran_Kinerja.query.filter(Sasaran_Kinerja.jabatan_id==jabatan_id).all()
     list = []
     for s in sasaran:
@@ -302,9 +306,10 @@ def get_sasaran(jabatan_id):
 
     return jsonify(list)
 
-@jabatan.route('/get-indikator/<sasaran_id>', methods=['GET', 'POST'])
+@jabatan.route('/get-indikator', methods=['GET', 'POST'])
 @login_required
-def get_indikator(sasaran_id):
+def get_indikator():
+    sasaran_id= request.args.get('id')
     indikator = Indikator_Kinerja.query.filter(Indikator_Kinerja.sasaran_kinerja_id==sasaran_id).all()
     list =[]
     for s in indikator:
