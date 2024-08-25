@@ -2,7 +2,7 @@ from flask import flash, redirect, render_template, url_for, request, session, a
 from flask_login import login_required
 from . import jabatan
 from ...models import Jabatan, Sasaran_Kinerja, Indikator_Kinerja, Ikhtisar_Jabatan
-from .forms import JabatanForm, SasaranKinerjaForm, IndikatorKinerjaForm, IkhtisarJabatanForm
+from .forms import JabatanForm, SasaranKinerjaForm, IndikatorKinerjaForm, IkhtisarJabatanForm, IkhtisarJabatanForm2
 from ... import db
 
 
@@ -244,12 +244,12 @@ def edit_uraian_(id, sasaran_id, indikator_id, uraian_id):
     item2 = Ikhtisar_Jabatan.query.get_or_404(uraian_id)
     form = IkhtisarJabatanForm(obj=item2)
     if form.validate_on_submit():
-        item.uraian_tugas = form.uraian_tugas.data
-        item.satuan = form.satuan.data
-        item.volume = form.volume.data
-        item.waktu = form.waktu.data
-        item.peralatan = form.peralatan.data
-        item.desc = form.desc.data
+        item2.uraian_tugas = form.uraian_tugas.data
+        item2.satuan = form.satuan.data
+        item2.volume = form.volume.data
+        item2.waktu = form.waktu.data
+        item2.peralatan = form.peralatan.data
+        item2.desc = form.desc.data
 
         db.session.commit()
         flash('Uraian tugas telah diubah.', category='success')
@@ -262,15 +262,15 @@ def edit_uraian_(id, sasaran_id, indikator_id, uraian_id):
 def edit_uraian(id, uraian_id):
     item = Ikhtisar_Jabatan.query.get_or_404(id)
     item2 = Ikhtisar_Jabatan.query.get_or_404(uraian_id)
-    form = IkhtisarJabatanForm(obj=item2)
+    form = IkhtisarJabatanForm2(obj=item2)
     if form.validate_on_submit():
-        item.indikator_kinerja =  form.indikator.data
-        item.uraian_tugas = form.uraian_tugas.data
-        item.satuan = form.satuan.data
-        item.volume = form.volume.data
-        item.waktu = form.waktu.data
-        item.peralatan = form.peralatan.data
-        item.desc = form.desc.data
+        item2.indikator_kinerja =  form.indikator.data
+        item2.uraian_tugas = form.uraian_tugas.data
+        item2.satuan = form.satuan.data
+        item2.volume = form.volume.data
+        item2.waktu = form.waktu.data
+        item2.peralatan = form.peralatan.data
+        item2.desc = form.desc.data
 
         db.session.commit()
         flash('Uraian tugas telah diubah.', category='success')
@@ -321,6 +321,30 @@ def get_indikator():
         data['jabatan_id'] = s.jabatan_id
         data['sasaran_kinerja_id'] = s.sasaran_kinerja_id
         data['desc'] = s.desc
+
+        list.append(data)
+
+    return jsonify(list)
+
+@jabatan.route('/get-uraian', methods=['GET', 'POST'])
+@login_required
+def get_uraian():
+    indikator_id= request.args.get('id')
+    uraian = Ikhtisar_Jabatan.query.filter(Ikhtisar_Jabatan.indikator_kinerja_id==indikator_id).all()
+    list = []
+    for s in uraian:
+        data = {}
+        
+        #Nama Indikator
+        data['id'] = s.id
+        data['uraian_tugas'] = s.uraian_tugas
+        data['satuan'] = s.satuan
+        data['volume'] = s.volume
+        data['waktu'] = s.waktu
+        data['peralatan'] = s.peralatan
+        data['desc'] = s.desc
+        data['jabatan_id'] = s.jabatan_id
+        data['indikator_kinerja_id'] = s.indikator_kinerja_id
 
         list.append(data)
 

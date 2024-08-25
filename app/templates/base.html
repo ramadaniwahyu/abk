@@ -91,15 +91,17 @@
         {% if current_user.pegawai %}
         {% if current_user.pegawai.foto %}
         <div class="user-p">
-          <!-- <img src="/static/img/foto/{{current_user.pegawai.foto}}" class="profile-user-img img-fluid img-circle" alt="User Image"> -->
+          <img src="/uploads/foto/{{current_user.pegawai.foto}}" class="profile-user-img img-fluid img-circle" alt="User Image">
         </div>
         {% else %}
         <div class="user-p">
           <img src="{{ url_for('serveStaticResource', resource='img/faces/face1.jpg') }}" class="profile-user-img img-fluid img-circle" alt="User Image">
         </div>
         {% endif %}
+        <div class="text-white">
         {{ current_user.pegawai }}<br />
         <small>{{ current_user.pegawai.jabatan }}</small>
+      </div>
         {% else %}
         <div class="user-p">
           <img src="{{ url_for('serveStaticResource', resource='img/faces/face1.jpg') }}" class="profile-user-img img-fluid img-circle" alt="User Image">
@@ -124,7 +126,7 @@
 
           <li class="nav-header">Menu Pribadi</li>
           <li class="nav-item">
-            <a href="/kinerja" class="nav-link">
+            <a href="/penilaian-kinerja" class="nav-link">
               <i class="nav-icon fas fa-pen-square"></i>
               <p>Perjanjian Kinerja</p>
             </a>

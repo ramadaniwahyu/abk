@@ -120,6 +120,7 @@ class Ikhtisar_Jabatan(Base):
     waktu = db.Column(db.Integer)
     peralatan = db.Column(db.Text)
     desc = db.Column(db.Text)
+    realisasi_kinerja = db.relationship('Realisasi_Kinerja', backref='ikhtisar_jabatan')
     
     def __repr__(self):
         return '{}'.format(self.uraian_tugas)
@@ -146,7 +147,7 @@ class Capaian_Bulanan(Base):
     bulan = db.Column(db.String(20))
     pegawai = db.relationship('Pegawai', foreign_keys='Capaian_Bulanan.pegawai_id', lazy='joined')
     penilai = db.relationship('Pegawai', foreign_keys='Capaian_Bulanan.penilai_id', lazy='joined')
-    realisasi_kinerja = db.relationship('Realisasi_Kinerja', backref='capaian_Bulanan')
+    realisasi_kinerja = db.relationship('Realisasi_Kinerja', backref='capaian_bulanan')
     
     def __repr__(self):
         return '{}'.format(self.bulan)

@@ -1,0 +1,185 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+
+{% block styles %}
+{% endblock styles %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="/beranda"><i class="fas fa-tachometer-alt"></i> Beranda</a></li>
+    <li class="breadcrumb-item"><a href="/penilaian-kinerja"><i class="fas fa-graduation-cap"></i> Penilaian Kinerja</a></li>
+    <li class="breadcrumb-item"><a href="/penilaian-kinerja/{{ item.id }}"><i class="fas fa-graduation-cap"></i> View </a></li>
+    <li class="breadcrumb-item active"> {{ title }}</li>
+</ol>
+{% endblock breadcrumbs %}
+
+{% block contents %}
+<div class="card">
+    <div class="card-header text-right">
+        <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('kinerja.tahunan') }}">
+            <span class="fas fa-arrow-left"></span>&nbsp;Kembali
+        </a>
+        <!-- <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
+            <span class="fas fa-plus"></span>&nbsp;Edit Penilaian Kinerja
+        </a>
+        <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
+            <span class="fas fa-list"></span>&nbsp;Sasaran Kinerja
+        </a>
+        <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
+            <span class="fas fa-stream"></span>&nbsp;Indikator Kinerja
+        </a> -->
+    </div>
+    <div class="card-body">
+        <div class="text-center">
+            <h4>
+                Penilaian Capaian Kinerja Bulanan Pegawai Negeri Sipil<br />Bulan {{item2.bulan}} {{item.tahun}}
+            </h4>
+        </div>
+        <div class="row">
+            <div class="col-3 text-center">
+                {% if item.pegawai.foto %}
+                <img src="/uploads/foto/{{ item.pegawai.foto }}" alt="{{ item.name }}" height="300">
+                {% else %}
+                <img src="{{ url_for('serveStaticResource', resource='img/faces/face1.jpg') }}" alt="{{ item.name }}" height="300">
+                {% endif %}
+            </div>
+            <div class="col-9">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr class="text-center">
+                            <td colspan="2"><strong>Pegawai</strong></td>
+                            <td colspan="2"><strong>Penilai</strong></td>
+                        </tr>
+                        <tr>
+                            <td width=10%><strong>Nama</strong></td>
+                            <td width=40%>{{ item2.pegawai }}</td>
+                            <td width=10%><strong>Nama</strong></td>
+                            <td width=40%>{{ item2.penilai }}</td>
+                        </tr>
+                        <tr>
+                            <td width=10%><strong>NIP</strong></td>
+                            <td width=40%>{{ item2.pegawai.nomor }}</td>
+                            <td width=10%><strong>NIP</strong></td>
+                            <td width=40%>N{{ item2.penilai.nomor }}</td>
+                        </tr>
+                        <tr>
+                            <td>Pangkat / Gol. Ruang</td>
+                            <td>{{ item2.pegawai.pangkat }}</td>
+                            <td>Pangkat / Gol. Ruang</td>
+                            <td>{{ item2.penilai.pangkat }}</td>
+                        </tr>
+                        <tr>
+                            <td>Jabatan</td>
+                            <td>{{ item2.pegawai.jabatan }}</td>
+                            <td>Jabatan</td>
+                            <td>{{ item2.penilai.jabatan }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr />
+        <div class="text-right">
+            <a type="button" class="btn bg-primary waves-effect m-r-20" style="width: 100px;" data-toggle="modal" data-target="#defaultModal">
+                <span class="fas fa-plus"></span>&nbsp;Tambah
+            </a> <br /><br />
+        </div>
+        <div class="row">
+            {% if hasil %}
+            {% for s in sasaran %}
+            <!-- <p class="bg-primary">Sasaran : {{s.name}}</p> -->
+            {% for i in indikator %}
+            {% if i.sasaran_kinerja == s %}
+            <p class="bg-success">Indikator Kegiatan : {{ i.name }}</p><br />
+            <table class="table table-bordered table-striped table-hover">
+                <tr style="background-color: black;" class="text-white text-center">
+                    <th>Kegiatan</th>
+                    <th width=3%>AK</th>
+                    <th width=5%>Target Kuantitas</th>
+                    <th width=5%>Target Satuan</th>
+                    <th width=5%>Target Mutu</th>
+                    <th width=3%>AK</th>
+                    <th width=5%>Realisasi Kuantitas</th>
+                    <th width=5%>Realisasi Satuan</th>
+                    <th width=3%>Realisasi Mutu</th>
+                    <th width=3%>Nilai Capaian Kinerja</th>
+                    <th width=4%></th>
+                </tr>
+                {% for data in hasil %}
+                {% if data.ikhtisar_jabatan.indikator_kinerja == i %}
+                <tr>
+                    <td>{{ data.ikhtisar_jabatan }}</td>
+                    <td>0</td>
+                    <td>{{ data.target }}</td>
+                    <td>{{ data.ikhtisar_jabatan.satuan }}</td>
+                    <td>100</td>
+                    <td>0</td>
+                    <td>{{ data.realisasi }}</td>
+                    <td>{{ data.ikhtisar_jabatan.satuan }}</td>
+                    <td width=3%>{{ (data.realisasi/data.target)*100 }}</td>
+                    <td width=3%>{{ (data.realisasi/data.target)*100 }}</td>
+                    <td class="text-center">
+                        <a href="{{ url_for('kinerja.del_capaian', id=data.id, tahun_id=data.capaian_bulanan.perjanjian_kinerja_id) }}" onclick="return confirm('Yakin menghapus data ini?');"><i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash text-danger"></i> </a>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                <tr class="text-bold">
+                    <td class="text-center" colspan="9">Nilai Capaian Kinerja</td>
+                    <td>{{ i.nilai }}</td>
+                    <td></td>
+                </tr>
+            </table>
+            {% endif %}
+            {% endfor %}
+            <br /><br />
+            {% endfor %}
+            <br /><br /><br /><br />
+            <p class="bg-warning">Rekapitulasi Penilaian Capaian Kinerja Bulan {{ item2.bulan }} Tahun {{ item2.tahun }}</p>
+            <table class="table table-bordered">
+                <tr class="bg-dark text-center">
+                    <th>Kegiatan Tugas Jabatan</th>
+                    <th width=15%>Nilai Capaian Kinerja</th>
+                </tr>
+                {% for s in sasaran %}
+                {% for i in indikator %}
+                {% if i.sasaran_kinerja==s %}
+                <tr>
+                    <td>{{ i.name }}</td>
+                    <td class="text-center">{{ i.nilai }}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+                <tr class="text-bold">
+                    <td></td>
+                    <td class="text-center">
+                       {{ total }} <br /> ( {{ p }} )
+                    </td>
+                </tr>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock contents %}
+
+{% block modals %}
+<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{item.name}} - Uraian Tugas Baru</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                {{ wtf.quick_form(form, button_map={'submit': 'primary'}) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock modals %}
+
+{% block scripts %}
+<script type="text/javascript" id="helper" data-name="{{item.pegawai.jabatan_id}}" src="/dist/js/pages/capaian.js"></script>
+{% endblock scripts %}

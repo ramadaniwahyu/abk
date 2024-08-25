@@ -29,7 +29,7 @@ class IkhtisarJabatanForm(FlaskForm):
     desc = TextAreaField('Keterangan')
     submit = SubmitField('Simpan')
     
-class IkhtisarJabatanForm(FlaskForm):
+class IkhtisarJabatanForm2(FlaskForm):
     sasaran = QuerySelectField('Sasaran Kinerja', validators=[DataRequired()],
                                query_factory=lambda: Sasaran_Kinerja.query.order_by(Sasaran_Kinerja.created_on.asc()).all(), 
                                get_label='name', allow_blank=True, blank_text='Belum ada pilihan')
