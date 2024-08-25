@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{{ title }} - ABK | PN Muara Bulian</title>
-  <link rel="icon" href="{{ url_for('serveStaticResource', resource='img/favico.png') }}" type="image/x-icon">
+  <title>{{ title }} - e-KEPO | PN Muara Bulian</title>
+  <link rel="icon" href="{{ url_for('serveStaticResource', resource='img/favico.ico') }}" type="image/x-icon">
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -78,10 +78,10 @@
   <aside class="main-sidebar sidebar-dark-info elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link navbar-info">
-      <img src="{{ url_for('serveStaticResource', resource='img/logo.png') }}" alt="Logo" class="brand-image"
+      <img src="{{ url_for('serveStaticResource', resource='img/logo2.png') }}" alt="Logo" class="brand-image"
            style="opacity: .8">
-      <span class="brand-text text-black-90">Analisa Beban Kerja</span>
-      <!-- <span>&nbsp;</span> -->
+      <!-- <span class="brand-text text-black-90">Analisa Beban Kerja</span> -->
+      <span>&nbsp;</span>
     </a>
 
     <!-- Sidebar -->
@@ -129,6 +129,12 @@
             <a href="/penilaian-kinerja" class="nav-link">
               <i class="nav-icon fas fa-pen-square"></i>
               <p>Perjanjian Kinerja</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/sasaran-kinerja" class="nav-link">
+              <i class="nav-icon fas fa-th-list"></i>
+              <p>Sasaran Kinerja</p>
             </a>
           </li>
 
