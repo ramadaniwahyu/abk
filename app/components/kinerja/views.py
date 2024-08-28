@@ -123,9 +123,9 @@ def sasaran():
     list = enumerate(list, start=1)
     uraian = Ikhtisar_Jabatan.query.filter(Ikhtisar_Jabatan.jabatan_id==current_user.pegawai.jabatan_id).all()
     total = 0
-    for i in uraian:
-        beban = i.volume * i.waktu
-        total = total + beban
+    # for i in uraian:
+    #     beban = i.volume * i.waktu
+    #     total = total + beban
     form = IkhtisarJabatanForm()
     list_uraian = enumerate(uraian, start=1)
 
@@ -198,9 +198,9 @@ def indikator_view(id, indikator_id):
     item2 = Indikator_Kinerja.query.get_or_404(indikator_id)
     uraian = Ikhtisar_Jabatan.query.filter(Ikhtisar_Jabatan.indikator_kinerja_id==item2.id).all()
     total = 0
-    for i in uraian:
-        beban = i.volume * i.waktu
-        total = total + beban
+    # for i in uraian:
+    #     beban = i.volume * i.waktu
+    #     total = total + beban
     list = enumerate(uraian, start=1)
     form = IkhtisarJabatanForm()
     if form.validate_on_submit():
