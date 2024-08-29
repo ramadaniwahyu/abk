@@ -50,7 +50,7 @@
                         </td>
                         <td class="text-center">
                             <div class="btn-group btn-group-toggle" toggle="buttons">
-                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="#" onclick="return confirm('Yakin menghapus data ini?');">
+                                <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{url_for('auth.user_delete', id=item.id)}}" onclick="return confirm('Yakin menghapus data ini?');">
                                     <i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash"></i>
                                 </a>
                             </div>
