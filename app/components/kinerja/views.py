@@ -208,6 +208,8 @@ def indikator_view(id, indikator_id):
                 jabatan_id = item.jabatan_id,
                 indikator_kinerja_id = item2.id,
                 uraian_tugas = form.uraian_tugas.data,
+                volume = 0,
+                waktu = 0,
                 satuan = form.satuan.data,
                 peralatan = form.peralatan.data,
                 desc = form.desc.data
