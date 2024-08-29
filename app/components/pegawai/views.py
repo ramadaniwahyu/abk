@@ -57,7 +57,7 @@ def view(id):
                 try: 
                     del_old = os.path.join(current_app.root_path, 'assets/uploads/foto', old_name)
                     os.remove(del_old)
-                except FileNotFoundError:
+                except file:
                     pass
         
             db.session.commit()
