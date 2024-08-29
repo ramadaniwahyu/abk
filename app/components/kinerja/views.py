@@ -189,7 +189,7 @@ def sasaran_del(id):
     db.session.delete(item)
     db.session.commit()
     flash('Data Sasaran Kinerja serta Indikator Kinerja dan Uraian Tugasnya berhasil dihapus', category='success')
-    return redirect(url_for('kinerja.sasaran_view', id=id))
+    return redirect(url_for('kinerja.sasaran', id=id))
 
 @kinerja.route('/sasaran-kinerja/<id>/indikator-kinerja/<indikator_id>', methods=['GET', 'POST'])
 @login_required
@@ -250,7 +250,7 @@ def indikator_del(id, indikator_id):
     db.session.delete(item2)
     db.session.commit()
     flash('Data indikator Kinerja dan  berhasil dihapus', category='success')
-    return redirect(url_for('kinerja.indikator_view', id=item.id, indikator_id=item2.id))
+    return redirect(url_for('kinerja.sasaran_view', id=item.id))
 
 @kinerja.route('/sasaran-kinerja/<id>/indikator-kinerja/<indikator_id>/uraian/<uraian_id>/edit', methods=['GET', 'POST'])
 @login_required
