@@ -125,6 +125,7 @@
           </li>
 
           <li class="nav-header">Menu Pribadi</li>
+          {% if not current_user.pegawai.jabatan_id %}
           <li class="nav-item">
             <a href="/penilaian-kinerja" class="nav-link">
               <i class="nav-icon fas fa-pen-square"></i>
@@ -137,6 +138,7 @@
               <p>Sasaran Kinerja</p>
             </a>
           </li>
+          {%% endif }
 
           {% if current_user.is_admin %}
           <li class="nav-header">Menu Kepegawaian</li>
