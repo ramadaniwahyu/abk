@@ -125,7 +125,7 @@
           </li>
 
           <li class="nav-header">Menu Pribadi</li>
-          {% if not current_user.pegawai.jabatan_id %}
+          {% if current_user.pegawai.jabatan_id %}
           <li class="nav-item">
             <a href="/penilaian-kinerja" class="nav-link">
               <i class="nav-icon fas fa-pen-square"></i>
