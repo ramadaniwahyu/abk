@@ -54,8 +54,11 @@ def view(id):
             file.save(filepath)
             
             if old_name:
-                del_old = os.path.join(current_app.root_path, 'assets/uploads/foto', old_name)
-                os.remove(del_old)
+                try: 
+                    del_old = os.path.join(current_app.root_path, 'assets/uploads/foto', old_name)
+                    os.remove(del_old)
+                except FileNotFoundError:
+                    pass
         
             db.session.commit()
             flash('Data berhasil diubah')
