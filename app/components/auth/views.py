@@ -51,26 +51,37 @@ def logout():
 @auth.route('/profil', methods=['GET', 'POST'])
 @login_required
 def profile():
-    pass
-    # return render_template('auth/profil.html', pengguna=pengguna, form=form, title='Profil Pengguna')
+    # pass
+    pengguna = User.query.get_or_404(current_user.id)
+    form = UserForm(obj=pengguna)
+    if form.validate_on_submit():
+        pengguna.name = form.name.data
+        pengguna.email = form.email.data
+
+        db.session.commit()
+        
+        flash('Pengguna telah diupdated.', 'info')
+        return redirect(url_for('index'))
+    
+    return render_template('auth/profil.html', pengguna=pengguna, form=form, title='Profil Pengguna')
 
 @auth.route('/profil/ganti-password', methods=['GET', 'POST'])
 @login_required
 def profile_password():
-    pass
-    # id = current_user.id
-    # pengguna = Pengguna.query.get_or_404(id)
-    # form = PasswordForm(obj=pengguna)
-    # if form.validate_on_submit():
-    #     if pengguna.verify_password(form.old_password.data):
-    #         pengguna.password = form.password.data
-    #         db.session.commit()
-    #         flash('Password telah diganti')
-    #         return redirect(url_for('auth.profile'))
-    #     else:
-    #         flash('Password lama salah.')
+    # pass
+    id = current_user.id
+    pengguna = User.query.get_or_404(id)
+    form = PasswordForm(obj=pengguna)
+    if form.validate_on_submit():
+        if pengguna.verify_password(form.old_password.data):
+            pengguna.password = form.password.data
+            db.session.commit()
+            flash('Password telah diganti')
+            return redirect(url_for('auth.profile'))
+        else:
+            flash('Password lama salah.')
     
-    # return render_template('auth/password.html', form=form, pengguna=pengguna, title='Ganti Password')
+    return render_template('auth/password.html', form=form, pengguna=pengguna, title='Ganti Password')
     
 @auth.route('/pengguna', methods=['GET', 'POST'])
 @login_required

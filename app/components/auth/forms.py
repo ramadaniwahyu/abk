@@ -13,6 +13,7 @@ class LoginForm(FlaskForm):
 class UserForm(FlaskForm):
     name = StringField('Nama Pengguna', validators=[DataRequired()])
     email = EmailField('Email', validators=[DataRequired(), Email()])
+    pegawai = QuerySelectField('Pegawai', query_factory=lambda: Pegawai.query.order_by(Pegawai.created_on.asc()).all(), get_label='name', allow_blank=True, blank_text='Belum ada pilihan')
     submit = SubmitField('Simpan')
 
 class PasswordForm(FlaskForm):
