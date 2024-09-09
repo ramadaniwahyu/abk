@@ -50,7 +50,11 @@ def capaian(id):
 @kinerja.route('/penilaian-kinerja/<id>/hapus', methods=['GET', 'POST'])
 @login_required
 def delete(id):
-    pass
+    item = Perjanjian_Kinerja.query.get_or_404(id)
+    db.session.delete(item)
+    db.session.commit()
+
+    return redirect(url_for('kinerja.tahunan'))
 
 @kinerja.route('/penilaian-kinerja/<tahun_id>/capaian/<id>', methods=['GET', 'POST'])
 @login_required
