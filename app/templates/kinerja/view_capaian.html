@@ -16,7 +16,7 @@
 {% block contents %}
 <div class="card">
     <div class="card-header text-right">
-        <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('kinerja.tahunan') }}">
+        <a type="button" class="btn bg-danger waves-effect m-r-20" href="{{ url_for('kinerja.capaian', id=item.id) }}">
             <span class="fas fa-arrow-left"></span>&nbsp;Kembali
         </a>
         <!-- <a type="button" class="btn bg-info waves-effect m-r-20" href="{{ url_for('jabatan.edit', id=item.id) }}">
