@@ -83,7 +83,9 @@ def view_capaian(id, tahun_id):
         setattr(i, 'nilai', nilai_indikator)
         total += nilai_indikator
 
-    total = round(total / len(indikator), 2)
+    if indikator:
+        total = round(total / len(indikator), 2)
+    
     if total < 50:
         p = 'Buruk'
     elif total <= 60:
