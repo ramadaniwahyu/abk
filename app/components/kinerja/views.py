@@ -47,6 +47,23 @@ def capaian(id):
     
     return render_template('kinerja/view.html', list=list, item=item, form=form, title='Penilaian Capaian Kinerja')
 
+@kinerja.route('/penilaian-kinerja/<id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit(id):
+    item = Perjanjian_Kinerja.query.get_or_404(id)
+    form = PerjanjianKinerjaForm(obj=item)
+    if form.validate_on_submit():
+        item.tgl = form.tgl.data
+        item.tahun = form.tahun.data
+        item.penilai = form.penilai.data
+        item.atasan_penilai = form.atasan_penilai.data
+
+        db.session.commit()
+        flash(flash('Perjanjian Kinerja telah diubah', category='success'))
+        return redirect(url_for('kinerja.capaian', id = item.id))
+    
+    return render_template('kinerja/edit.html', item=item, form=form, title='Edit Perjanjian Kinerja')
+
 @kinerja.route('/penilaian-kinerja/<id>/hapus', methods=['GET', 'POST'])
 @login_required
 def delete(id):
