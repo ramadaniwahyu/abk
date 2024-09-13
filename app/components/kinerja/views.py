@@ -70,8 +70,25 @@ def delete(id):
     item = Perjanjian_Kinerja.query.get_or_404(id)
     db.session.delete(item)
     db.session.commit()
-
+    flash('Perjanjian Kinerja telah dihapus', category='success')
     return redirect(url_for('kinerja.tahunan'))
+
+@kinerja.route('/penilaian-kinerja/<tahun_id>/capaian/<id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_capaian(id, tahun_id):
+    item = Perjanjian_Kinerja.query.get_or_404(tahun_id)
+    item2 = Capaian_Bulanan.query.get_or_404(id)
+    form = CapaianBulananForm(obj=item2)
+    if form.validate_on_submit():
+        item2.tgl = form.tgl.data
+        item2.bulan = form.bulan.data
+
+        db.session.commit()
+        flash('Capaian Bulanan telah diubah', category='success')
+        return redirect(url_for('kinerja.capaian', id=item.id))
+    
+    return render_template('kinerja/edit-capaian.html', item=item, item2=item2, form=form, title="Edit Capaian Kinerja Bulanan")
+
 
 @kinerja.route('/penilaian-kinerja/<tahun_id>/capaian/<id>', methods=['GET', 'POST'])
 @login_required
@@ -120,7 +137,7 @@ def view_capaian(id, tahun_id):
     form = RealisasiKinerjaForm()
     if form.validate_on_submit():
         new = Realisasi_Kinerja(capaian_bulanan_id=item2.id, ikhtisar_jabatan=form.uraian.data,
-                                target=form.target.data, realisasi=form.realisasi.data)
+                                target=form.target.data, realisasi=form.realisasi.data, eviden=form.eviden.data)
         print(new)
         db.session.add(new)
         db.session.commit()
@@ -133,8 +150,19 @@ def view_capaian(id, tahun_id):
 @login_required
 def del_capaian(id, tahun_id):
     item = Perjanjian_Kinerja.query.get_or_404(tahun_id)
-    item2 = Realisasi_Kinerja.query.get_or_404(id)
+    item2 = Capaian_Bulanan.query.get_or_404(id)
     db.session.delete(item2)
+    db.session.commit()
+    flash(flash('Capaian berhasil dihapus', category='danger'))
+    return redirect(url_for('kinerja.view_capaian', id=item2.id, tahun_id=item.id))
+
+@kinerja.route('/penilaian-kinerja/<tahun_id>/capaian/<bulan_id>/realisasi/<id>/hapus', methods=['GET', 'POST'])
+@login_required
+def del_realisasi(id, bulan_id, tahun_id):
+    item = Perjanjian_Kinerja.query.get_or_404(tahun_id)
+    item2 = Capaian_Bulanan.query.get_or_404(bulan_id)
+    item3 = Realisasi_Kinerja.query.get_or_404(id)
+    db.session.delete(item3)
     db.session.commit()
     flash(flash('Realisasi berhasil dihapus', category='danger'))
     return redirect(url_for('kinerja.view_capaian', id=item2.id, tahun_id=item.id))

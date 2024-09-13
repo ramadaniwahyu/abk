@@ -157,6 +157,7 @@ class Realisasi_Kinerja(Base):
     ikhtisar_jabatan_id = db.Column(db.Integer, db.ForeignKey('ikhtisar_jabatan.id'))
     target = db.Column(db.Integer)
     realisasi = db.Column(db.Integer)
+    eviden = db.Column(db.Text)
     
     def __repr__(self):
         return '{}'.format(self.realisasi)

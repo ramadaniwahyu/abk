@@ -58,6 +58,7 @@ class RealisasiKinerjaForm(FlaskForm):
                                get_label='uraian_tugas', allow_blank=True, blank_text='Belum ada pilihan')
     target = IntegerField('Target Capaian', validators=[DataRequired()])
     realisasi = IntegerField('Realisasi Capaian', validators=[DataRequired()])
+    eviden = StringField('Eviden / Bukti Dukung', description="Lampirkan link Google Drive / OneDrive uraian tugas tersebut.", validators=[DataRequired()])
     submit = SubmitField('Simpan')
 
 

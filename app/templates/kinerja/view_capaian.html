@@ -103,6 +103,7 @@
                     <th width=5%>Realisasi Satuan</th>
                     <th width=3%>Realisasi Mutu</th>
                     <th width=3%>Nilai Capaian Kinerja</th>
+                    <th>Eviden</th>
                     <th width=4%></th>
                 </tr>
                 {% for data in hasil %}
@@ -118,8 +119,15 @@
                     <td>{{ data.ikhtisar_jabatan.satuan }}</td>
                     <td width=3%>{{ (data.realisasi/data.target)*100 }}</td>
                     <td width=3%>{{ (data.realisasi/data.target)*100 }}</td>
+                    <td>
+                        {% if data.eviden %}
+                        <a href="{{ data.eviden }}" target="blank"><i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-file-alt text-info"></i> </a>
+                        {% else %}
+                        Tidak ada eviden
+                        {% endif %}
+                    </td>
                     <td class="text-center">
-                        <a href="{{ url_for('kinerja.del_capaian', id=data.id, tahun_id=data.capaian_bulanan.perjanjian_kinerja_id) }}" onclick="return confirm('Yakin menghapus data ini?');"><i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash text-danger"></i> </a>
+                        <a href="{{ url_for('kinerja.del_realisasi', id=data.id, bulan_id=data.capaian_bulanan.id, tahun_id=data.capaian_bulanan.perjanjian_kinerja_id) }}" onclick="return confirm('Yakin menghapus data ini?');"><i data-toggle="tooltip" data-placement="top" title="Hapus" class="fas fa-trash text-danger"></i> </a>
                     </td>
                 </tr>
                 {% endif %}
