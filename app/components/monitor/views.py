@@ -75,18 +75,20 @@ def list():
 
                     if total < 50:
                         p = 'Buruk'
-                        c = 'bg-danger'
                     elif total <= 60:
                         p = 'Sedang'
-                        c = 'bg-warning'
                     elif total <=75:
                         p = 'Cukup'
-                        c = 'bg-success'
                     elif total <=90:
                         p = 'Baik'
-                        c = 'bg-success'
                     else:
                         p = 'Sangat Baik'
+                        
+                    if total == 75 :
+                        c = 'bg-warning'
+                    elif total < 75:
+                        c = 'bg-danger'
+                    else:
                         c = 'bg-success'
                     
                     n = {}    
@@ -96,8 +98,6 @@ def list():
                     nilai_bulan[ind] = n
                     peg['predikat'] = p
                                 
-        
-        # peg['trial'] = pk
         peg['nilai'] = nilai_bulan
         
         data.append(peg)    
@@ -106,4 +106,4 @@ def list():
     
     
     
-    return render_template('monitor/list.html', list=list, title='Monitoring Penilaian Kinerja')
+    return render_template('monitor/list.html', list=list, year=year, title='Monitoring Penilaian Kinerja')
