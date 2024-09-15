@@ -7,6 +7,7 @@ from wtforms_sqlalchemy.fields import QuerySelectField
 from app.models import Sasaran_Kinerja, Indikator_Kinerja
 class JabatanForm(FlaskForm):
     name = StringField('Nama Jabatan', validators=[DataRequired()])
+    level = IntegerField('Level Jabatan')
     desc = TextAreaField('Keterangan')
     submit = SubmitField('Simpan')
     

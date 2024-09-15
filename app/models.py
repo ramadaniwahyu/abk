@@ -67,6 +67,7 @@ class Pegawai(Base):
 class Jabatan(Base):
     name = db.Column(db.String(255), nullable=False)
     desc = db.Column(db.Text)
+    level = db.Column(db.Integer, default=100)
     pegawai = db.relationship('Pegawai', backref='jabatan')
     ikhtisar_jabatan = db.relationship('Ikhtisar_Jabatan', backref='jabatan')
     sasaran_kinerja = db.relationship('Sasaran_Kinerja', backref='jabatan')

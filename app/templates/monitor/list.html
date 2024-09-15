@@ -1,0 +1,103 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+
+{% block styles %}
+{% endblock styles %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb float-sm-right">
+    <li class="breadcrumb-item"><a href="/beranda"><i class="fas fa-tachometer-alt"></i> Beranda</a></li>
+    <li class="breadcrumb-item active"> {{ title }}</li>
+</ol>
+{% endblock breadcrumbs %}
+
+{% block contents %}
+<div class="card">
+    <div class="card-header text-right">
+
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="myDatas" class="table table-bordered table-striped table-hover">
+                <thead class="justify-content-center">
+                    <tr>
+                        <th rowspan="2" width=5%>No</th>
+                        <th rowspan="2" >Foto</th>
+                        <th rowspan="2" >Nama Pegawai / NIP</th>
+                        <th rowspan="2" >Pangkat / Jabatan</th>
+                        <th colspan="12" class="text-center">Bulan ke-</th>
+                        <th rowspan="2">Keterangan</th>
+                    </tr>
+                    <tr>
+                        <th>01</th>
+                        <th>02</th>
+                        <th>03</th>
+                        <th>04</th>
+                        <th>05</th>
+                        <th>06</th>
+                        <th>07</th>
+                        <th>08</th>
+                        <th>09</th>
+                        <th>10</th>
+                        <th>11</th>
+                        <th>12</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for no, item in list %}
+                    <tr>
+                        <td class="text-center">
+                            {{ no }} 
+                        </td>
+                        <td>
+                            {% if item.foto %}
+                            <img src="/uploads/foto/{{ item.foto }}" alt="{{ item.name }}" width="30">
+                            {% else %}
+                            <img src="img/faces/face1.jpg" alt="{{ item.name }}" width="30">
+                            {% endif %} &nbsp;
+                        </td>
+                        <td>
+                            <strong>{{ item.name }}</strong><br />
+                            NIP. {{ item.nomor }}
+                        </td>
+                        <td class="text-center">
+                            {% if item.pangkat%}
+                            {{item.pangkat}} / ({{item.pangkat.gol}}/{{item.pangkat.ruang}}) 
+                            {% else %}
+                            -
+                            {% endif %}<br />
+                            {% if item.jabatan%}
+                            {{item.jabatan}}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
+                        <td class="{{item.nilai[0].class}}">{{ item.nilai[0].nilai }}</td>
+                        <td class="{{item.nilai[1].class}}">{{ item.nilai[1].nilai }}</td>
+                        <td class="{{item.nilai[2].class}}">{{ item.nilai[2].nilai }}</td>
+                        <td class="{{item.nilai[3].class}}">{{ item.nilai[3].nilai }}</td>
+                        <td class="{{item.nilai[4].class}}">{{ item.nilai[4].nilai }}</td>
+                        <td class="{{item.nilai[5].class}}">{{ item.nilai[5].nilai }}</td>
+                        <td class="{{item.nilai[6].class}}">{{ item.nilai[6].nilai }}</td>
+                        <td class="{{item.nilai[7].class}}">{{ item.nilai[7].nilai }}</td>
+                        <td class="{{item.nilai[8].class}}">{{ item.nilai[8].nilai }}</td>
+                        <td class="{{item.nilai[9].class}}">{{ item.nilai[9].nilai }}</td>
+                        <td class="{{item.nilai[10].class}}">{{ item.nilai[10].nilai }}</td>
+                        <td class="{{item.nilai[11].class}}">{{ item.nilai[11].nilai }}</td>
+                        <td class="text-center">
+                            
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock contents %}
+
+{% block modals %}
+{% endblock modals %}
+
+{% block scripts %}
+{% endblock scripts %}

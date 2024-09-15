@@ -12,7 +12,7 @@ def list():
     list = enumerate(Jabatan.query.all(), start=1)
     form = JabatanForm()
     if form.validate_on_submit():
-        newJabatan = Jabatan(name=form.name.data, desc=form.desc.data)
+        newJabatan = Jabatan(name=form.name.data, level=form.level.data, desc=form.desc.data)
         db.session.add(newJabatan)
         db.session.commit()
         
@@ -74,6 +74,7 @@ def edit(id):
     if form.validate_on_submit():
         item.name = form.name.data
         item.desc = form.desc.data
+        item.level = form.level.data
         db.session.commit()
         
         flash('Data jabatan telah diubah', category='success')

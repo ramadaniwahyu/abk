@@ -52,6 +52,9 @@ app.register_blueprint(abk_blueprint)
 from app.components.kinerja import kinerja as kinerja_blueprint
 app.register_blueprint(kinerja_blueprint)
 
+from app.components.monitor import monitor as monitor_blueprint
+app.register_blueprint(monitor_blueprint)
+
 # Errors Handling
 @app.errorhandler(403)
 def forbidden(error):
