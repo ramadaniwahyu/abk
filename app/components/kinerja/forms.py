@@ -46,6 +46,7 @@ class IkhtisarJabatanForm(FlaskForm):
     peralatan = TextAreaField('Peralatan yang digunakan', render_kw={"rows": 5})
     desc = TextAreaField('Keterangan', render_kw={"rows": 5})
     submit = SubmitField('Simpan')
+    
 class RealisasiKinerjaForm(FlaskForm):
     sasaran = QuerySelectField('Sasaran Kinerja', validators=[DataRequired()],
                                query_factory=lambda: Sasaran_Kinerja.query.order_by(Sasaran_Kinerja.created_on.asc()).all(), 
@@ -61,4 +62,8 @@ class RealisasiKinerjaForm(FlaskForm):
     eviden = StringField('Eviden / Bukti Dukung', description="Lampirkan link Google Drive / OneDrive uraian tugas tersebut.", validators=[DataRequired()])
     submit = SubmitField('Simpan')
 
-
+class EvidenForm(FlaskForm):
+    target = IntegerField('Target Capaian', validators=[DataRequired()])
+    realisasi = IntegerField('Realisasi Capaian', validators=[DataRequired()])
+    eviden = StringField('Eviden / Bukti Dukung', description="Lampirkan link Google Drive / OneDrive uraian tugas tersebut.", validators=[DataRequired()])
+    submit = SubmitField('Simpan')

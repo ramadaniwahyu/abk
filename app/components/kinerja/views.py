@@ -4,7 +4,7 @@ from . import kinerja
 from ...models import Perjanjian_Kinerja, Capaian_Bulanan, Realisasi_Kinerja, Sasaran_Kinerja, Indikator_Kinerja, Ikhtisar_Jabatan
 from ... import db
 
-from .forms import PerjanjianKinerjaForm, CapaianBulananForm, RealisasiKinerjaForm, SasaranKinerjaForm, IndikatorKinerjaForm, IkhtisarJabatanForm
+from .forms import PerjanjianKinerjaForm, CapaianBulananForm, RealisasiKinerjaForm, SasaranKinerjaForm, IndikatorKinerjaForm, IkhtisarJabatanForm, EvidenForm
 
 def check_admin():
     
@@ -89,7 +89,6 @@ def edit_capaian(id, tahun_id):
     
     return render_template('kinerja/edit-capaian.html', item=item, item2=item2, form=form, title="Edit Capaian Kinerja Bulanan")
 
-
 @kinerja.route('/penilaian-kinerja/<tahun_id>/capaian/<id>', methods=['GET', 'POST'])
 @login_required
 def view_capaian(id, tahun_id):
@@ -145,6 +144,24 @@ def view_capaian(id, tahun_id):
         return redirect(url_for('kinerja.view_capaian', id=item2.id, tahun_id=item.id))
     
     return render_template('kinerja/view_capaian.html', item=item, item2=item2, hasil=hasil, indikator=indikator, sasaran=sasaran, total=total, p=p, form=form, title='Penilaian Capaian Kinerja Bulanan')
+
+@kinerja.route('/penilaian-kinerja/<tahun_id>/capaian/<bulan_id>/realisasi/<id>', methods=['GET', 'POST'])
+@login_required
+def edit_realisasi(id, bulan_id, tahun_id):
+    item = Perjanjian_Kinerja.query.get_or_404(tahun_id)
+    item2 = Capaian_Bulanan.query.get_or_404(bulan_id)
+    item3 = Realisasi_Kinerja.query.get_or_404(id)
+    form = EvidenForm(obj=item3)
+    if form.validate_on_submit():
+        item3.target = form.target.data
+        item3.realisasi = form.realisasi.data
+        item3.eviden = form.eviden.data
+        
+        db.session.commit()
+        flash('Data Realisasi Kinerja telah diperbarui', category='success')
+        return redirect(url_for('kinerja.view_capaian', id=item2.id, tahun_id=item.id))
+    
+    return render_template('kinerja/edit-realisasi.html', form=form, item=item, item2=item2, item3=item3, title='Edit Realisasi Capaian Kinerja')
 
 @kinerja.route('/penilaian-kinerja/<tahun_id>/capaian/<id>/hapus', methods=['GET', 'POST'])
 @login_required
